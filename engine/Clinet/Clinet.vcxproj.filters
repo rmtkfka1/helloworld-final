@@ -196,9 +196,6 @@
     <ClInclude Include="LightManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>Contents\Object</Filter>
-    </ClInclude>
     <ClInclude Include="StartScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
@@ -335,9 +332,6 @@
     </ClCompile>
     <ClCompile Include="LightManager.cpp">
       <Filter>Engine\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Box.cpp">
-      <Filter>Contents\Object</Filter>
     </ClCompile>
     <ClCompile Include="StartScene.cpp">
       <Filter>Contents\Scene</Filter>

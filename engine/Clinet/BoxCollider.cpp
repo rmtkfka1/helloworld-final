@@ -10,6 +10,7 @@
 #include "ResourceManager.h"
 #include "SphereCollider.h"
 #include "ConstantBuffer.h"
+#include "Model.h"
 bool BoxCollider::_colliderRender = true;
 
 BoxCollider::BoxCollider():BaseCollider(ColliderType::Box)
@@ -32,7 +33,9 @@ void BoxCollider::Init()
 
 void BoxCollider::Update()
 {
-	auto onwerTransform = GetOwner()->_transform;
+
+
+	auto onwerTransform = GetOwner()->_model->GetBones()[1]->transform;
 
 	_orginbox.Transform(_box, onwerTransform->GetMatrix());
 
@@ -50,7 +53,8 @@ void BoxCollider::Render()
 		core->GetCmdList()->IASetVertexBuffers(0, 1, &_mesh->GetVertexView());
 		core->GetCmdList()->IASetIndexBuffer(&_mesh->GetIndexView());
 
-		GetOwner()->_transform->PushData();
+		auto onwerTransform = GetOwner()->_model->GetBones()[1]->transform;
+		onwerTransform->PushData();
 
 		core->GetTableHeap()->SetGraphicsRootDescriptorTable();
 

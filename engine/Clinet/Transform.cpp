@@ -5,14 +5,15 @@
 #include "CameraManager.h"
 void Transform::Update()
 {
-	Matrix matTranslationBack = Matrix::CreateTranslation(-(_totalCenter));
+	Matrix matTranslationBack = Matrix::CreateTranslation(-(_center));
 	Matrix matScale = Matrix::CreateScale(_localScale);
 	Matrix matRotation = Matrix::CreateRotationX(_localRotation.x);
 	matRotation *= Matrix::CreateRotationY(_localRotation.y);
 	matRotation *= Matrix::CreateRotationZ(_localRotation.z);
 	Matrix matTranslation = Matrix::CreateTranslation(_localPosition);
+	Matrix matTranslationBack2 = Matrix::CreateTranslation((_center));
 
-	_matLocal = matTranslationBack * matScale * matRotation * matTranslation;
+	_matLocal = matTranslationBack * matScale * matRotation * matTranslation * matTranslationBack2;
 	_matWorld = _matLocal; 
 
 	shared_ptr<Transform> parent = GetParent().lock();
@@ -22,9 +23,8 @@ void Transform::Update()
 		_matWorld *= parent->GetLocalToWorldMatrix();
 	}
 
-
-	/*for (const shared_ptr<Transform>& child : _children)
-		child->Update();*/
+	for (const shared_ptr<Transform>& child : _children)
+		child->Update();
 
 }
 

@@ -351,8 +351,13 @@ void Model::MakeTransform()
 			bone->transform->SetParent(bone->parent->transform);
 			bone->parent->transform->AddChild(bone->transform);
 		}
-
 	}
+
+	for (auto& data : _meshData)
+	{
+		data->bone->transform->SetCenter(data->box.Center);
+	}
+
 }
 
 

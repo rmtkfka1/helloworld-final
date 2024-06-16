@@ -33,8 +33,8 @@ public:
 	void SetParent(shared_ptr<Transform> parent) { _parent = parent; }
 	weak_ptr<Transform> GetParent() { return _parent; }
 
-	void SetTotalCenter(vec3 center) { _totalCenter = center; }
-	void SetSize(vec3 size) { _totalSize = size; }
+	void SetCenter(vec3 center) { _center = center; }
+	void SetSize(vec3 size) { _size = size; }
 	wstring _name;
 private:
 
@@ -49,8 +49,8 @@ private:
 	weak_ptr<Transform> _parent;
 	vector<shared_ptr<Transform>> _children;
 
-	vec3 _totalCenter{};
-	vec3 _totalSize{};
+	vec3 _center{};
+	vec3 _size{};
 	float _totalRadius{};
 	
 };

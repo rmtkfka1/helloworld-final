@@ -21,7 +21,6 @@
 
 #include "Lamp.h"
 #include "LightManager.h"
-#include "Box.h"
 #include <random>
 
 
@@ -51,16 +50,12 @@ void Stage1::Init()
 	{
 		shared_ptr<GameObject> player = make_shared<GameObject>();
 
-		shared_ptr<Model> model = Model::ReadData(L"Tank/Tank");
+		shared_ptr<Model> model = Model::ReadData(L"helicpoter/helicpoter");
 		player->SetModel(model);
-
+		player->AddComponent(make_shared<BoxCollider>());
 
 		AddGameObject(player);
 	}
-
-
-
-
 
 	Super::Init();
 
