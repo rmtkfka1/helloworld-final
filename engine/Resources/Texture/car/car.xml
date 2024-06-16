@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Materials>
+    <Material>
+        <Name>StingrayPBS1</Name>
+        <Shader>default.hlsl</Shader>
+        <DiffuseFile>windows_Base_Color_obac.png</DiffuseFile>
+        <SpecularFile></SpecularFile>
+        <NormalFile>windows_Normal_DirectX.png</NormalFile>
+        <Ambient R="0.2" G="0.2" B="0.2" A="1"/>
+        <Diffuse R="1.0" G="1.0" B="1.0" A="1"/>
+        <Specular R="1.0" G="0" B="0" A="1"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Material>
+    <Material>
+        <Name>StingrayPBS2</Name>
+        <Shader>default.hlsl</Shader>
+        <DiffuseFile>cab_Base_Color.png</DiffuseFile>
+        <SpecularFile>cab_Metallic.png</SpecularFile>
+        <NormalFile>cab_Normal_DirectX.png</NormalFile>
+        <Ambient R="0.2" G="0.2" B="0.2" A="1"/>
+        <Diffuse R="1.0" G="1.0" B="1.0" A="1"/>
+        <Specular R="1.0" G="0" B="0" A="1"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Material>
+</Materials>

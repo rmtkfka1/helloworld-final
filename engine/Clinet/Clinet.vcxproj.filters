@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{f4928a59-9415-4d46-9b82-4754993e8479}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{9f1f1567-75b7-4f00-b598-0e832ab1ff6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{d593f6eb-79fd-456c-bbaa-910a6867425a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\IMGUI">
+      <UniqueIdentifier>{171fa849-1ac3-4643-ad0b-eedfb34b9224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{b1f8822f-e471-4f38-8b45-e7c9ee9bbf29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Scene">
+      <UniqueIdentifier>{f091f7b9-9306-44da-a19b-7e8ff52c9985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Object">
+      <UniqueIdentifier>{02248e2a-024c-43e6-9cdf-cbbed0e4ff23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\ShaderFile">
+      <UniqueIdentifier>{b4f53eaf-e3a3-434b-898b-4053c3fd4c5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Component">
+      <UniqueIdentifier>{a9198a7b-8e2a-487d-ace5-e47b2dcad067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Component\Scripts">
+      <UniqueIdentifier>{820da48e-a17f-45bd-adbe-60d6c1957f06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Component\Collider">
+      <UniqueIdentifier>{7382b3f2-4c5e-4b2a-882d-857a919bf111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{6282ee5b-161d-42c3-95a1-804ddeec4d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Manager">
+      <UniqueIdentifier>{d28d7426-de32-4aa2-96e7-98acb50794ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\ShaderFile\Common">
+      <UniqueIdentifier>{deec0c3e-c759-46b1-876e-202ceaa7a6d8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Clinet.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="d3dx12.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleMath.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imgui.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imgui_impl_dx12.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imgui_impl_win32.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imgui_internal.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imstb_rectpack.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imstb_textedit.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imstb_truetype.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Include\Imgui\imconfig.h">
+      <Filter>Utils\IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RootSignature.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ConstantBuffer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="TableHeap.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManger.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Helper.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceBase.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="FileUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts.h">
+      <Filter>Resource\Component\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Resource\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCollider.h">
+      <Filter>Resource\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>Resource\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisonManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereCollider.h">
+      <Filter>Resource\Component\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="StructedBuffer.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="LightManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Box.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Clinet.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleMath.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\Imgui\imgui_demo.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\Imgui\imgui_draw.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\Imgui\imgui_impl_dx12.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\Imgui\imgui_impl_win32.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\Imgui\imgui_tables.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\Imgui\imgui_widgets.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Include\Imgui\imgui.cpp">
+      <Filter>Utils\IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="RootSignature.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="ImguiManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstantBuffer.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="TableHeap.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManger.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Helper.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceBase.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml2.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="FileUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts.cpp">
+      <Filter>Resource\Component\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Resource\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCollider.cpp">
+      <Filter>Resource\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>Resource\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisonManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereCollider.cpp">
+      <Filter>Resource\Component\Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="StructedBuffer.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="LightManager.cpp">
+      <Filter>Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Box.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="StartScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Clinet.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Clinet.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SimpleMath.inl">
+      <Filter>Utils</Filter>
+    </None>
+    <None Include="..\Resources\Shader\sky.hlsl">
+      <Filter>Resource\ShaderFile</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="깨우침.txt" />
+    <Text Include="TODOList.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Resources\Shader\default.hlsl">
+      <Filter>Resource\ShaderFile</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\BoundingBox.hlsl">
+      <Filter>Resource\ShaderFile</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\instancing.hlsl">
+      <Filter>Resource\ShaderFile</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\color.hlsl">
+      <Filter>Resource\ShaderFile</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\Common.hlsl">
+      <Filter>Resource\ShaderFile\Common</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\helper.hlsl">
+      <Filter>Resource\ShaderFile\Common</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
