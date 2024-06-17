@@ -187,9 +187,6 @@
     <ClInclude Include="SphereCollider.h">
       <Filter>Resource\Component\Collider</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
     <ClInclude Include="StructedBuffer.h">
       <Filter>Engine</Filter>
     </ClInclude>
@@ -207,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>Contents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Resource\ShaderFile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@ public:
 	void SetDiffuseTexture(shared_ptr<Texture> texture) { _diffuseTexture = texture; }
 	void SetNormalTexture(shared_ptr<Texture> texture) { _normalTexture = texture; }
 	void SetSpecularTexture(shared_ptr<Texture> texture) { _SpecularTexture = texture; }
-
+	void SetHeightTexture(shared_ptr<Texture> texture) { _HeightTexture = texture; }
 	void Update();
 
 private:
@@ -39,5 +39,6 @@ private:
 	shared_ptr<Texture> _diffuseTexture;
 	shared_ptr<Texture> _normalTexture;
 	shared_ptr<Texture> _SpecularTexture;
+	shared_ptr<Texture> _HeightTexture;
 };
 

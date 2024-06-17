@@ -77,16 +77,24 @@ void Stage1::Init()
 
 		shared_ptr<Terrain> terrain = make_shared<Terrain>();
 
-		shared_ptr<Mesh> mesh = Helper::MakeSquareGrid(1000, 1000, 5000.0f, vec2(100, 100));
+		shared_ptr<Mesh> mesh = Helper::MakeSquareGrid(500, 500, 200.0f, vec2(10, 10));
 		terrain->AddMesh(mesh);
 
 		shared_ptr<Material> material = make_shared<Material>();
 
 		material->SetName(L"terrian_mateiral");
 
+		shared_ptr<Texture> diffuse = make_shared<Texture>();
+		diffuse->Init(L"../Resources/Texture/terrian/Diffuse Map PNG.png");
+
+		shared_ptr<Texture> height = make_shared<Texture>();
+		height->Init(L"../Resources/Texture/terrian/Height Map PNG.png");
+
+		material->SetHeightTexture(height);
+		material->SetDiffuseTexture(diffuse);
+
 		shared_ptr<Shader> shader = make_shared<Shader>();
 		ShaderInfo info;
-		info.rasterizerType = RASTERIZER_TYPE::WIREFRAME;
 
 		shader->Init(L"color.hlsl", info);
 

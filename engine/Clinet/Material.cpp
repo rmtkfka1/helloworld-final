@@ -27,6 +27,11 @@ void Material::Update()
 		core->GetTableHeap()->SetSRV(_diffuseTexture->GetCpuHandle(), reg);
 	}
 
+	if (_HeightTexture)
+	{
+		SRV_REGISTER reg = SRV_REGISTER(static_cast<int8>(SRV_REGISTER::t3));
+		core->GetTableHeap()->SetSRV(_HeightTexture->GetCpuHandle(), reg);
+	}
 
 	if (_normalTexture)
 	{

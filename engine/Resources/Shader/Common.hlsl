@@ -64,6 +64,7 @@ cbuffer MATERIAL_PARAMS : register(b3)
 Texture2D basic_texture : register(t0);
 Texture2D normal_texture : register(t1);
 Texture2D specular_texture : register(t2);
+Texture2D height_texture : register(t3);
 SamplerState sam_0 : register(s0);
 
 #endif
