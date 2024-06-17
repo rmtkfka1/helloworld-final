@@ -12,11 +12,11 @@ void Transform::Update()
 	Matrix matTranslation = Matrix::CreateTranslation(_localPosition);
 
 	////// 센터를 고려한 평행이동 행렬 생성
-	//Matrix matTranslationBack = Matrix::CreateTranslation(-_center);
-	//Matrix matTranslationBack2 = Matrix::CreateTranslation(_center);
+	Matrix matTranslationBack = Matrix::CreateTranslation(-_center);
+	Matrix matTranslationBack2 = Matrix::CreateTranslation(_center);
 
 	// 변환 행렬을 순서대로 곱셈
-	_matLocal =  matScale * matRotation  * matTranslation ;
+	_matLocal =  matScale * matRotation  * matTranslation  ;
 
 	_matWorld = _matLocal; 
 

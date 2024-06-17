@@ -49,7 +49,6 @@ void GameObject::Update()
 	
 	vector<shared_ptr<ModelBone>>& meshData = _model->GetBones();
 
-
 	for (auto& data : meshData)
 	{
 		data->transform->Update();

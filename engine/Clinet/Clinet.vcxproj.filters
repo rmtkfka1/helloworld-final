@@ -205,6 +205,9 @@
     <ClInclude Include="House.h">
       <Filter>Contents\Object</Filter>
     </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -346,6 +349,9 @@
       <Filter>Contents\Object</Filter>
     </ClCompile>
     <ClCompile Include="House.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
       <Filter>Contents\Object</Filter>
     </ClCompile>
   </ItemGroup>

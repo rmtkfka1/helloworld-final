@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Helper.h"
+#include "Mesh.h"
 
 std::wstring Helper::ToWString(string value)
 {
@@ -55,4 +56,47 @@ vec3 Helper::ToEulerAngles(Quaternion q)
     angles.z = std::atan2(siny_cosp, cosy_cosp);
 
     return angles;
+}
+
+shared_ptr<Mesh> Helper::MakeSquareGrid(const int numSlices, const int numStacks, const float scale, const vec2 texScale)
+{
+    vector<Vertex> vec;
+    vector<uint32> indices;
+
+    float dx = 2.0f / numSlices;
+    float dy = 2.0f / numStacks;
+
+    float y = 1.0f;
+    for (int j = 0; j < numStacks + 1; j++) {
+        float x = -1.0f;
+        for (int i = 0; i < numSlices + 1; i++) {
+            Vertex v;
+            v.position = vec3(x, y, 0.0f) * scale;
+            v.normal = vec3(0.0f, 0.0f, -1.0f);
+            v.uv = vec2(x + 1.0f, y + 1.0f) * 0.5f * texScale;
+            v.tangent = vec3(1.0f, 0.0f, 0.0f);
+
+            vec.push_back(v);
+
+            x += dx;
+        }
+        y -= dy;
+    }
+
+    for (int j = 0; j < numStacks; j++) {
+        for (int i = 0; i < numSlices; i++) {
+            indices.push_back((numSlices + 1) * j + i);
+            indices.push_back((numSlices + 1) * j + i + 1);
+            indices.push_back((numSlices + 1) * (j + 1) + i);
+            indices.push_back((numSlices + 1) * (j + 1) + i);
+            indices.push_back((numSlices + 1) * j + i + 1);
+            indices.push_back((numSlices + 1) * (j + 1) + i + 1);
+        }
+    }
+
+    shared_ptr<Mesh> mesh = make_shared<Mesh>();
+
+    mesh->Init(vec, indices);
+
+    return mesh;
 }

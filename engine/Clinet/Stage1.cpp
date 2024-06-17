@@ -24,6 +24,7 @@
 #include <random>
 #include "Player.h"
 #include "House.h"
+#include "Terrain.h"
 
 
 default_random_engine dre;
@@ -60,16 +61,47 @@ void Stage1::Init()
 	}
 
 	{
-		shared_ptr<GameObject> house = make_shared<GameObject>();
+		shared_ptr<House> house = make_shared<House>();
 
 		shared_ptr<Model> model = Model::ReadData(L"mushroom/mushroom");
 		house->SetModel(model);
 
 		house->AddComponent(make_shared<BoxCollider>());
 		house->GetModel()->GetRoot()->transform->SetLocalScale(vec3(20.0f, 20.0f, 20.0f));
+		house->GetModel()->GetRoot()->transform->SetLocalRotation(vec3(XMConvertToRadians(30.0f), 0, 0));
 		AddGameObject(house);
 	}
 
+
+	{
+
+		shared_ptr<Terrain> terrain = make_shared<Terrain>();
+
+		shared_ptr<Mesh> mesh = Helper::MakeSquareGrid(1000, 1000, 5000.0f, vec2(100, 100));
+		terrain->AddMesh(mesh);
+
+		shared_ptr<Material> material = make_shared<Material>();
+
+		material->SetName(L"terrian_mateiral");
+
+		shared_ptr<Shader> shader = make_shared<Shader>();
+		ShaderInfo info;
+		info.rasterizerType = RASTERIZER_TYPE::WIREFRAME;
+
+		shader->Init(L"color.hlsl", info);
+
+		shared_ptr<Transform> transform = make_shared<Transform>();
+		terrain->SetTransform(transform);
+
+		terrain->_transform->SetLocalPosition(vec3(0, -50.0f, 0));
+		terrain->_transform->SetLocalRotation(vec3(90.0f, 0, 0));
+
+		material->SetShader(shader);
+
+		terrain->AddMaterial(material);
+
+		AddGameObject(terrain);
+	}
 
 
 

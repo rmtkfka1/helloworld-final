@@ -20,7 +20,8 @@ enum class GAMEOBJECT_TYPE
 	Box,
 	PlayerShield,
 	Particle,
-	EnemyBullet
+	EnemyBullet,
+	Terrain
 };
 
 class GameObject :public enable_shared_from_this<GameObject>
