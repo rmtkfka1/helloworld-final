@@ -80,8 +80,6 @@ void Converter::ReadModelData(aiNode* node, int32 index, int32 parent, DirectX::
 	bone->parent = parent;
 	bone->name = node->mName.C_Str();
 
-
-	
 	// Relative Transform
 	Matrix transform(node->mTransformation[0]);
 	bone->transform = transform.Transpose();
@@ -95,8 +93,7 @@ void Converter::ReadModelData(aiNode* node, int32 index, int32 parent, DirectX::
 	//bone->transform = bone->transform * matParent;
 
 	_bones.push_back(bone);
-
-
+	
 	ReadMeshData(node, index, bone->transform);
 
 
@@ -321,24 +318,10 @@ void Converter::CalculateBoundingBox()
 		sphere.Center = box.Center;
 
 	}
-
-	if (_meshes.size() >= 2)
-	{
-		_totalbox = _meshes[0]->box;
-		_totalSphere = _meshes[0]->sphere;
-		for (int i = 1; i < _meshes.size(); ++i)
-		{
-			BoundingBox::CreateMerged(_totalbox, _totalbox, _meshes[i]->box);
-			BoundingSphere::CreateMerged(_totalSphere, _totalSphere, _meshes[i]->sphere);
-		}
-	}
-
-	if (_meshes.size() == 1)
-	{
-		_totalbox = _meshes[0]->box;
-		_totalSphere = _meshes[0]->sphere;
-	}
 	
+	_totalbox = _meshes[0]->box;
+	_totalSphere = _meshes[0]->sphere;
+
 	cout << "totalBox" << endl;
 	cout << "사이즈" << _totalbox.Extents.x << " , " << _totalbox.Extents.y << " ," << _totalbox.Extents.z << endl;
 	cout << "중심점" << _totalbox.Center.x << " , " << _totalbox.Center.y << " ," << _totalbox.Center.z << endl;
@@ -346,7 +329,6 @@ void Converter::CalculateBoundingBox()
 
 
 
-	
 
 };
 void Converter::ReadMaterialData()

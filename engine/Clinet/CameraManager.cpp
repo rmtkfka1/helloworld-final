@@ -3,16 +3,16 @@
 #include "Core.h"
 #include "ConstantBuffer.h"
 #include "Scene.h"
-#include "SceneManger.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "ImguiManager.h"
 #include "ObjectManager.h"
 #include <random>
+#include "Player.h"
+#include "Model.h"
 
 std::default_random_engine generator;
 std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
-
 
 Matrix CameraManager::S_MatView;
 Matrix CameraManager::S_MatProjection;
@@ -31,47 +31,25 @@ void CameraManager::Init()
     _centerScreen = { (_rect.right + _rect.left) / 2, (_rect.bottom + _rect.top) / 2 };
 
     _mousePos = _centerScreen;
-    _cameraLook = vec3(0, 1.0f, 1.0f);
+
+    _player = ObjectManager::GetInstance()->_player.lock();
+    auto& transform = _player.lock()->_model->GetRoot()->transform;
+    transform->GetLook().Normalize();
+
+
+    _cameraPos = transform->GetLocalPosition() + _offset;
+    _cameraLook = vec3(0, 0, 1);
     _cameraUp = vec3(0, 1.0f, 0);
 }
 
 void CameraManager::Update()
 {
-
-
     MouseUpdate();
 
-    // 회전 행렬 생성 및 카메라 방향 벡터 업데이트
-    Matrix rotationMatrix = Matrix::CreateRotationX(XMConvertToRadians(_cameraPitch));
-    rotationMatrix *= Matrix::CreateRotationY(XMConvertToRadians(_cameraYaw));
-    _cameraLook = vec3::TransformNormal(vec3(0, 0, 1.0f), rotationMatrix);
-
-    // 이동 처리
-    float speed = 100.0f * TimeManager::GetInstance()->GetDeltaTime();
-
-    if (KeyManager::GetInstance()->GetButton(KEY_TYPE::W))
-    {
-        _cameraPos += _cameraLook * speed;
-    }
-    if (KeyManager::GetInstance()->GetButton(KEY_TYPE::S))
-    {
-        _cameraPos -= _cameraLook * speed;
-    }
-
-    vec3 _cameraRight = -_cameraLook.Cross(_cameraUp);
-
-    if (KeyManager::GetInstance()->GetButton(KEY_TYPE::D))
-    {
-        _cameraPos += _cameraRight * speed;
-    }
-    if (KeyManager::GetInstance()->GetButton(KEY_TYPE::A))
-    {
-        _cameraPos -= _cameraRight * speed;
-    }
-
-
-    // 뷰 행렬 업데이트
-    S_MatView = DirectX::XMMatrixLookToLH(_cameraPos, _cameraLook, _cameraUp);
+    PlayerUpdate();
+    CameraPosUpdate();
+    CameraLookUpdate();
+    RegenerateMatrix();
 
     // 프로젝션 행렬 업데이트
     if (_type == PROJECTION_TYPE::PERSPECTIVE)
@@ -82,12 +60,13 @@ void CameraManager::Update()
     _matView = S_MatView;
     _matProjection = S_MatProjection;
 
-
     ImguiManager::GetInstance()->_temp = _cameraPos;
 }
 
 void CameraManager::MouseUpdate()
 {
+    auto& transform = _player.lock()->_model->GetRoot()->transform;
+
     // 마우스 위치 업데이트
     _mousePos = KeyManager::GetInstance()->GetMousePos();
 
@@ -100,7 +79,7 @@ void CameraManager::MouseUpdate()
 
     // Yaw와 Pitch 업데이트
     _cameraYaw += deltaPosX * _cameraSpeed * dt;
-    _cameraPitch += deltaPosY * _cameraSpeed * dt;
+    _cameraPitch -= deltaPosY * _cameraSpeed * dt;
 
     // Pitch 제한
     if (_cameraPitch > 89.0f) _cameraPitch = 89.0f;
@@ -113,26 +92,62 @@ void CameraManager::MouseUpdate()
     SetCursorPos(static_cast<int>(_centerScreen.x), static_cast<int>(_centerScreen.y));
 }
 
-void CameraManager::Animation()
+void CameraManager::PlayerUpdate()
 {
-
-    float dt = TimeManager::GetInstance()->GetDeltaTime();;
-
-    if (_elaspedTime > 1.5f)
-    {
-        _animationflag = false;
-        _elaspedTime = 0;
-        _shake = vec3(0, 0, 0);
-    }
-
-    if (_animationflag)
-    {
-        float intenisty = 1000.0f;
-        _shake.x = distribution(generator) * intenisty * dt;
-        _shake.y = distribution(generator) * intenisty * dt;
-
-        _elaspedTime += dt;
-    }
-
+    // 피치와 요만큼 플레이어를 회전시킨다.
+    auto playerTransform = _player.lock()->_model->GetRoot()->transform;
+    playerTransform->SetLocalRotation(vec3(XMConvertToRadians(_cameraPitch), XMConvertToRadians(_cameraYaw), 0));
 }
 
+void CameraManager::CameraPosUpdate()
+{
+    auto playerTransform = _player.lock()->_model->GetRoot()->transform;
+
+    Matrix mat = Matrix::Identity;
+
+    _cameraRight = playerTransform->GetRight();
+    _cameraUp = playerTransform->GetUp();
+    _cameraLook = playerTransform->GetLook();
+
+    mat._11 = _cameraRight.x; mat._21 = _cameraUp.x; mat._31 = _cameraLook.x;
+    mat._12 = _cameraRight.y; mat._22 = _cameraUp.y; mat._32 = _cameraLook.y;
+    mat._13 = _cameraRight.z; mat._23 = _cameraUp.z; mat._33 = _cameraLook.z;
+
+    vec3 offset = vec3::Transform(_offset, mat);
+    vec3 cameraPos = playerTransform->GetLocalPosition() + offset;
+    vec3 direction = cameraPos - _cameraPos;
+
+    float length = direction.Length();
+    direction.Normalize();
+
+    float distance = length * 0.01f;
+
+    _cameraPos = _cameraPos + direction * distance;
+}
+
+void CameraManager::CameraLookUpdate()
+{
+    auto playerTransform = _player.lock()->_model->GetRoot()->transform;
+
+    Matrix mtxLookAt = XMMatrixLookAtLH(_cameraPos, playerTransform->GetLocalPosition(), playerTransform->GetUp());
+    _cameraRight = vec3(mtxLookAt._11, mtxLookAt._21, mtxLookAt._31);
+    _cameraUp = vec3(mtxLookAt._12, mtxLookAt._22, mtxLookAt._32);
+    _cameraLook = vec3(mtxLookAt._13, mtxLookAt._23, mtxLookAt._33);
+}
+
+void CameraManager::RegenerateMatrix()
+{
+    _cameraLook.Normalize();
+    _cameraRight.Cross(_cameraUp, _cameraLook);
+    _cameraRight.Normalize();
+
+    _cameraUp.Cross(_cameraLook, _cameraRight);
+    _cameraUp.Normalize();
+
+    S_MatView._11 = _cameraRight.x; S_MatView._12 = _cameraUp.x; S_MatView._13 = _cameraLook.x;
+    S_MatView._21 = _cameraRight.y; S_MatView._22 = _cameraUp.y; S_MatView._23 = _cameraLook.y;
+    S_MatView._31 = _cameraRight.z; S_MatView._32 = _cameraUp.z; S_MatView._33 = _cameraLook.z;
+    S_MatView._41 = -_cameraPos.Dot(_cameraRight);
+    S_MatView._42 = -_cameraPos.Dot(_cameraUp);
+    S_MatView._43 = -_cameraPos.Dot(_cameraLook);
+}

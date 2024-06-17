@@ -357,7 +357,6 @@ void Model::MakeTransform()
 	{
 		data->bone->transform->SetCenter(data->box.Center);
 	}
-
 }
 
 
@@ -427,7 +426,7 @@ void Model::BindCacheInfo()
 	// Bone 계층 정보 채우기
 	if (_root == nullptr && _boneData.size() > 0)
 	{
-		_root = _boneData[0];
+		_root = _boneData[1];
 
 		for (const auto& bone : _boneData)
 		{

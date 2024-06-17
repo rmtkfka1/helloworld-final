@@ -8,8 +8,8 @@ int main()
 {
 	Converter converter;
 	converter.ReadAssetFile(L"helicpoter/source/Bell Huey.fbx");
-	converter.ExportMaterialData(L"helicpotevr/helicpoter");
-	converter.ExportModelData(L"helicpoterv/helicpoter");
+	//converter.ExportMaterialData(L"helicpoterss/helicpoter");
+	converter.ExportModelData(L"helicpoterss/helicpoter");
 	
 
 	cout << "-----------------------------------" << endl;

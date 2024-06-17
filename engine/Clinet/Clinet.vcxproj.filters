@@ -199,6 +199,9 @@
     <ClInclude Include="StartScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -335,6 +338,9 @@
     </ClCompile>
     <ClCompile Include="StartScene.cpp">
       <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Contents\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

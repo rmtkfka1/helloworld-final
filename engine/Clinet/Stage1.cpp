@@ -22,6 +22,7 @@
 #include "Lamp.h"
 #include "LightManager.h"
 #include <random>
+#include "Player.h"
 
 
 default_random_engine dre;
@@ -42,21 +43,40 @@ Stage1::~Stage1()
 
 void Stage1::Init()
 {
-
-
-	CameraManager::GetInstance()->Init();
 	
 
 	{
-		shared_ptr<GameObject> player = make_shared<GameObject>();
+		shared_ptr<Player> player = make_shared<Player>();
 
-		shared_ptr<Model> model = Model::ReadData(L"helicpoter/helicpoter");
+		shared_ptr<Model> model = Model::ReadData(L"helicpoterss/helicpoter");
 		player->SetModel(model);
 		player->AddComponent(make_shared<BoxCollider>());
-
+		ObjectManager::GetInstance()->_player = player;
 		AddGameObject(player);
 	}
 
+	{
+		shared_ptr<GameObject> gameobject = make_shared<GameObject>();
+		shared_ptr<Transform> transform = make_shared<Transform>();
+		gameobject->_transform = transform;
+		shared_ptr<Model> model = Model::ReadData(L"sphere/sphere");
+
+		auto& mateirals = model->GetMaterials();
+
+		ShaderInfo info{ RASTERIZER_TYPE::CULL_FRONT,DEPTH_STENCILE_TYPE::LESS_EQUAL };
+		for (auto& mateiral : mateirals)
+		{
+			shared_ptr<Shader> shader = make_unique<Shader>();
+			shader->Init(L"sky.hlsl", info);
+			mateiral->SetShader(shader);
+		}
+
+		gameobject->SetModel(model);
+		AddGameObject(gameobject);
+	}
+
+
+	CameraManager::GetInstance()->Init();
 	Super::Init();
 
 }

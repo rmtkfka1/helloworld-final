@@ -35,7 +35,7 @@ void BoxCollider::Update()
 {
 
 
-	auto onwerTransform = GetOwner()->_model->GetBones()[1]->transform;
+	auto onwerTransform = GetOwner()->_model->GetBones()[0]->transform;
 
 	_orginbox.Transform(_box, onwerTransform->GetMatrix());
 

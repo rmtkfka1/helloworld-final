@@ -30,6 +30,7 @@ struct ModelMesh
 	int32 boneIndex;
 	BoundingOrientedBox box;
 	shared_ptr<ModelBone> bone; // Cache;
+
 };
 
 class Model :public ResourceBase

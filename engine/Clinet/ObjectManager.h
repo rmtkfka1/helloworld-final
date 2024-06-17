@@ -14,7 +14,7 @@ public:
 
 public:
 
-	Player* player;
+	weak_ptr<Player> _player;
 
 };
 

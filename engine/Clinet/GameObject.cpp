@@ -49,72 +49,6 @@ void GameObject::Update()
 	
 	vector<shared_ptr<ModelBone>>& meshData = _model->GetBones();
 
-	for (auto& data : meshData)
-	{
-		if (data->name == L"Bell_Huey")
-		{
-
-
-		}
-	}
-
-
-	for (auto& data : meshData)
-	{
-		if (KeyManager::GetInstance()->GetButton(KEY_TYPE::ONE))
-		{
-			static float temp = 0.001f;
-			temp += 0.000001f;
-
-			if (data->name == L"Bell_Huey")
-			{
-				auto& pos = data->transform->GetLocalRotation();
-				data->transform->SetLocalRotation(vec3(pos.x, pos.y + temp, pos.z));
-			}
-		}
-	}
-
-
-	
-		static float temp = 0.1f;
-
-		for (auto& data : meshData)
-		{
-			if (data->name == L"Top_Rotor")
-			{
-				auto& pos = data->transform->GetLocalRotation();
-				data->transform->SetLocalRotation(vec3(pos.x,pos.y+temp,pos.z));
-			}
-		}
-
-		for (auto& data : meshData)
-		{
-			if (data->name == L"Back_Rotor")
-			{
-				auto& pos = data->transform->GetLocalRotation();
-				data->transform->SetLocalRotation(vec3(pos.x+temp, pos.y , pos.z));
-			}
-		}
-
-
-	if (KeyManager::GetInstance()->GetButton(KEY_TYPE::RIGHT))
-	{
-	
-		float _offset = 10000.0f;
-		float DELTA_TIME = TimeManager::GetInstance()->GetDeltaTime();
-		for (auto& data : meshData)
-		{
-			if (data->name == L"Bell_Huey")
-			{
-				vec3 pos = data->transform->GetLocalPosition();
-				pos += data->transform->GetLook() * _offset * DELTA_TIME;
-				data->transform->SetLocalPosition(pos);
-			}
-		}
-		
-
-	}
-
 
 	for (auto& data : meshData)
 	{
@@ -154,7 +88,6 @@ void GameObject::Render()
 
 		core->GetTableHeap()->SetGraphicsRootDescriptorTable();
 		core->GetCmdList()->DrawIndexedInstanced(data->meshes->GetIndexCount(), 1, 0, 0, 0); 
-	
 	}
 
 }
