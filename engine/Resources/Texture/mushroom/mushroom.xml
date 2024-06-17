@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Materials>
+    <Material>
+        <Name>DefaultMaterial</Name>
+        <Shader>default.hlsl</Shader>
+        <DiffuseFile></DiffuseFile>
+        <SpecularFile></SpecularFile>
+        <NormalFile></NormalFile>
+        <Ambient R="0" G="0" B="0" A="1"/>
+        <Diffuse R="0.60000002" G="0.60000002" B="0.60000002" A="1"/>
+        <Specular R="0" G="0" B="0" A="0"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Material>
+    <Material>
+        <Name>mushroom_mat</Name>
+        <Shader>default.hlsl</Shader>
+        <DiffuseFile>mushroom_mat_albedo.jpg</DiffuseFile>
+        <SpecularFile></SpecularFile>
+        <NormalFile></NormalFile>
+        <Ambient R="0" G="0" B="0" A="1"/>
+        <Diffuse R="0.60000002" G="0.60000002" B="0.60000002" A="1"/>
+        <Specular R="0" G="0" B="0" A="0"/>
+        <Emissive R="0" G="0" B="0" A="1"/>
+    </Material>
+</Materials>

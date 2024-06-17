@@ -10,7 +10,7 @@ LightColor CalculateLightColor(int lightIndex, float3 normal, float3 worldPos)
  
     if(g_light[lightIndex].lightType==0)
     {
-        float Power = 0.1f;
+        float Power = 1.0f;
         // Directional Light
         color.ambient = g_light[lightIndex].lightColor.ambient;
         

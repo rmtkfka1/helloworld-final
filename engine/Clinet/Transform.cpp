@@ -11,7 +11,7 @@ void Transform::Update()
 	matRotation *= Matrix::CreateRotationZ(_localRotation.z);
 	Matrix matTranslation = Matrix::CreateTranslation(_localPosition);
 
-	//// 센터를 고려한 평행이동 행렬 생성
+	////// 센터를 고려한 평행이동 행렬 생성
 	//Matrix matTranslationBack = Matrix::CreateTranslation(-_center);
 	//Matrix matTranslationBack2 = Matrix::CreateTranslation(_center);
 

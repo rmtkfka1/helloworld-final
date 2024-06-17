@@ -17,7 +17,7 @@ public:
 	const Matrix& GetLocalToWorldMatrix() { return _matWorld; }
 	vec3 GetWorldPosition() { return _matWorld.Translation(); }
 
-	vec3 GetRight() { return _matWorld.Right(); }
+	vec3 GetRight() { return _matWorld.Left(); }
 	vec3 GetUp() { return _matWorld.Up(); }
 	vec3 GetLook() { return _matWorld.Forward(); }
 	void SetLocalPosition(const vec3 position) { _localPosition = position; }

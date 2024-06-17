@@ -33,7 +33,7 @@ void CameraManager::Init()
     _mousePos = _centerScreen;
 
     _player = ObjectManager::GetInstance()->_player.lock();
-    auto& transform = _player.lock()->_model->GetRoot()->transform;
+    auto& transform = _player.lock()->GetModel()->GetRoot()->transform;
     transform->GetLook().Normalize();
 
 
@@ -65,7 +65,7 @@ void CameraManager::Update()
 
 void CameraManager::MouseUpdate()
 {
-    auto& transform = _player.lock()->_model->GetRoot()->transform;
+    auto& transform = _player.lock()->GetModel()->GetRoot()->transform;
 
     // 마우스 위치 업데이트
     _mousePos = KeyManager::GetInstance()->GetMousePos();
@@ -95,13 +95,13 @@ void CameraManager::MouseUpdate()
 void CameraManager::PlayerUpdate()
 {
     // 피치와 요만큼 플레이어를 회전시킨다.
-    auto playerTransform = _player.lock()->_model->GetRoot()->transform;
+    auto playerTransform = _player.lock()->GetModel()->GetRoot()->transform;
     playerTransform->SetLocalRotation(vec3(XMConvertToRadians(_cameraPitch), XMConvertToRadians(_cameraYaw), 0));
 }
 
 void CameraManager::CameraPosUpdate()
 {
-    auto playerTransform = _player.lock()->_model->GetRoot()->transform;
+    auto playerTransform = _player.lock()->GetModel()->GetRoot()->transform;
 
     Matrix mat = Matrix::Identity;
 
@@ -120,14 +120,14 @@ void CameraManager::CameraPosUpdate()
     float length = direction.Length();
     direction.Normalize();
 
-    float distance = length * 0.01f;
+    float distance = length * 5.0f * TimeManager::GetInstance()->GetDeltaTime();
 
     _cameraPos = _cameraPos + direction * distance;
 }
 
 void CameraManager::CameraLookUpdate()
 {
-    auto playerTransform = _player.lock()->_model->GetRoot()->transform;
+    auto playerTransform = _player.lock()->GetModel()->GetRoot()->transform;
 
     Matrix mtxLookAt = XMMatrixLookAtLH(_cameraPos, playerTransform->GetLocalPosition(), playerTransform->GetUp());
     _cameraRight = vec3(mtxLookAt._11, mtxLookAt._21, mtxLookAt._31);

@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "Model.h"
 #include "Transform.h"
+#include "LightManager.h"
+#include "Helper.h"
+
 
 Player::Player():GameObject(GAMEOBJECT_TYPE::Player)
 {
@@ -14,23 +17,15 @@ Player::~Player()
 void Player::Init()
 {
 	GameObject::Init();
+	AddLight();
+
 }
 
 void Player::Update()
 {
-	vector<shared_ptr<ModelBone>>& meshData = _model->GetBones();
-	auto& rootTransform = _model->GetRoot()->transform;
-
-	rootTransform->SetLocalScale(vec3(0.3f, 0.3f, 0.3f));
-
-	if (KeyManager::GetInstance()->GetButton(KEY_TYPE::ONE))
-	{
-		static float temp = 0.001f;
-		temp += 0.000001f;
-
-		auto& pos = rootTransform->GetLocalRotation();
-		rootTransform->SetLocalRotation(vec3(pos.x, pos.y + temp, pos.z));
-	};
+	vector<shared_ptr<ModelBone>>& meshData = GetModel()->GetBones();
+	auto& rootTransform = GetModel()->GetRoot()->transform;
+	float dt = TimeManager::GetInstance()->GetDeltaTime();
 
 
 	static float temp = 0.1f;
@@ -44,21 +39,67 @@ void Player::Update()
 		}
 	}
 
+	KeyUpdate(rootTransform, dt);
+	GameObject::Update();
+	UpdateLight();
 
-	if (KeyManager::GetInstance()->GetButton(KEY_TYPE::RIGHT))
+}
+
+void Player::KeyUpdate(std::shared_ptr<Transform>& rootTransform, float dt)
+{
+	if (KeyManager::GetInstance()->GetButton(KEY_TYPE::W))
 	{
 
-		float _offset = 10000.0f;
-		float DELTA_TIME = TimeManager::GetInstance()->GetDeltaTime();
 		vec3 pos = rootTransform->GetLocalPosition();
-		pos += rootTransform->GetLook() * _offset * DELTA_TIME;
+		pos += rootTransform->GetLook() * _speed * dt;
 		rootTransform->SetLocalPosition(pos);
 	};
 
-	GameObject::Update();
+	if (KeyManager::GetInstance()->GetButton(KEY_TYPE::S))
+	{
+
+		vec3 pos = rootTransform->GetLocalPosition();
+		pos -= rootTransform->GetLook() * _speed * dt;
+		rootTransform->SetLocalPosition(pos);
+	};
+
+	if (KeyManager::GetInstance()->GetButton(KEY_TYPE::D))
+	{
+
+		vec3 pos = rootTransform->GetLocalPosition();
+		pos += rootTransform->GetRight() * _speed * dt;
+		rootTransform->SetLocalPosition(pos);
+	};
+
+	if (KeyManager::GetInstance()->GetButton(KEY_TYPE::A))
+	{
+
+		vec3 pos = rootTransform->GetLocalPosition();
+		pos -= rootTransform->GetRight() * _speed * dt;
+		rootTransform->SetLocalPosition(pos);
+	};
 }
 
 void Player::Render()
 {
 	GameObject::Render();
+}
+
+void Player::AddLight()
+{
+	LightInfo info;
+	info.color.ambient = vec4(0, 0, 0, 0);
+	info.color.specular = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	info.color.diffuse = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	info.lightType = static_cast<int32>(LIGHT_TYPE::SPOT_LIGHT);
+	info.attenuation = Helper::GetAttenuationCoeff(50000.0f);
+	_lightIndex = LightManager::GetInstnace()->PushLight(info);
+
+}
+
+void Player::UpdateLight()
+{
+	auto& params = LightManager::GetInstnace()->_lightParmas;
+	params.LightInfos[_lightIndex].position = this->GetModel()->GetRoot()->transform->GetLocalPosition();
+	params.LightInfos[_lightIndex].direction = this->GetModel()->GetRoot()->transform->GetLook();
 }

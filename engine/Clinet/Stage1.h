@@ -14,6 +14,7 @@ public:
 	virtual void Render() override;
 	virtual void ClearScene() override;
 
+	void AddLight();
 
 };
 

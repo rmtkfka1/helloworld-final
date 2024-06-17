@@ -7,9 +7,9 @@ uniform_int_distribution<int> uid(0, 3);
 int main()
 {
 	Converter converter;
-	converter.ReadAssetFile(L"helicpoter/source/Bell Huey.fbx");
-	//converter.ExportMaterialData(L"helicpoterss/helicpoter");
-	converter.ExportModelData(L"helicpoterss/helicpoter");
+	converter.ReadAssetFile(L"mushroom-house/source/lp5.obj");
+	converter.ExportMaterialData(L"mushroom/mushroom");
+	converter.ExportModelData(L"mushroom/mushroom");
 	
 
 	cout << "-----------------------------------" << endl;

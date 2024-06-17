@@ -51,20 +51,20 @@ float4 PS_Main(VS_OUT input) : SV_Target
 {
     float4 color = basic_texture.Sample(sam_0, input.uv);
     
-    //input.normal = normalize(input.normal);
+    input.normal = normalize(input.normal);
     
-    //LightColor totalColor = (LightColor) 0.f;
+    LightColor totalColor = (LightColor) 0.f;
     
-    //for (int i = 0; i < g_lightCount; ++i)
-    //{
-    //    LightColor lightcolor = CalculateLightColor(i, input.normal, input.WorldPos.xyz);
+    for (int i = 0; i < g_lightCount; ++i)
+    {
+        LightColor lightcolor = CalculateLightColor(i, input.normal, input.WorldPos.xyz);
         
-    //    totalColor.diffuse += lightcolor.diffuse;
-    //    totalColor.ambient += lightcolor.ambient;
-    //    totalColor.specular += lightcolor.specular;
-    //}
+        totalColor.diffuse += lightcolor.diffuse;
+        totalColor.ambient += lightcolor.ambient;
+        totalColor.specular += lightcolor.specular;
+    }
     
-    //color.xyz = (totalColor.diffuse.xyz * color.xyz) + (totalColor.ambient.xyz * color.xyz) + (totalColor.specular.xyz * color.xyz);
+    color.xyz = (totalColor.diffuse.xyz * color.xyz) + (totalColor.ambient.xyz * color.xyz) + (totalColor.specular.xyz * color.xyz);
     
     
     

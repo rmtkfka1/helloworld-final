@@ -81,6 +81,8 @@ void GameObject::Render()
 
 		data->bone->transform->PushData();
 
+
+
 		if (data->material)
 		{
 			data->material->Update();
@@ -109,7 +111,8 @@ void GameObject::Render(uint32 instance , shared_ptr<StructedBuffer> buffer)
 		core->GetCmdList()->IASetVertexBuffers(0, _countof(pVertexBufferViews), pVertexBufferViews);
 		core->GetCmdList()->IASetIndexBuffer(&data->meshes->GetIndexView());
 
-		data->bone->transform->PushData();
+	/*	data->bone->transform->PushData();*/
+		_transform->PushData();
 
 		if (data->material)
 		{
@@ -126,18 +129,12 @@ void GameObject::Render(uint32 instance , shared_ptr<StructedBuffer> buffer)
 void GameObject::SetTransform(shared_ptr<Transform> transform)
 {
 	_transform = transform;
-	_transform->SetCenter(_totalCenter);
-	_transform->SetSize(_totalSize);
-
 }
 
 
 
 void GameObject::SetModel(shared_ptr<Model> model)
 {
-	_totalCenter = model->GetCenter();
-	_totalSize = model->GetSize();
-	_totalRadius = model->GetRadius();
 	_model = model;
 }
 
@@ -153,8 +150,8 @@ void GameObject::AddComponent(shared_ptr<Component> component)
 	{
 		if (static_pointer_cast<BaseCollider>(component)->GetColliderType() == ColliderType::Box)
 		{
-			static_pointer_cast<BoxCollider>(component)->SetTotalCenter(this->_totalCenter);
-			static_pointer_cast<BoxCollider>(component)->SetSize(this->_totalSize);
+			static_pointer_cast<BoxCollider>(component)->SetTotalCenter(_model->GetCenter());
+			static_pointer_cast<BoxCollider>(component)->SetSize(_model->GetSize());
 			static_pointer_cast<BoxCollider>(component)->MakeBoundingBox();
 			CollisonManager::GetInstance()->AddCollider(static_pointer_cast<BoxCollider>(component));
 			_collider = static_pointer_cast<BoxCollider>(component);
@@ -163,8 +160,8 @@ void GameObject::AddComponent(shared_ptr<Component> component)
 		else if (static_pointer_cast<BaseCollider>(component)->GetColliderType() == ColliderType::Sphere)
 		{
 			shared_ptr<SphereCollider> collider = static_pointer_cast<SphereCollider>(component);
-			collider->SetTotalCenter(this->_totalCenter);
-			collider->SetRadius(this->_totalRadius);
+			collider->SetTotalCenter(_model->GetCenter());
+			collider->SetRadius(_model->GetRadius());
 			collider->MakeBoundingSphere();
 			CollisonManager::GetInstance()->AddCollider(collider);
 			_collider = collider;

@@ -1,4 +1,5 @@
 #include "ResourceBase.h"
+#include "Component.h"
 class Material;
 class Mesh;
 class Transform;
@@ -33,7 +34,7 @@ struct ModelMesh
 
 };
 
-class Model :public ResourceBase
+class Model :public ResourceBase ,public Component
 {
 public:
 	Model();
@@ -84,6 +85,8 @@ private:
 	vector<shared_ptr<Material>>    _materialData;
 	vector<shared_ptr<ModelBone>>   _boneData;
 	vector<shared_ptr<ModelMesh>>   _meshData;
+
+public:
 
 	vec3 _totalCenter{};
 	vec3 _totalSize{};

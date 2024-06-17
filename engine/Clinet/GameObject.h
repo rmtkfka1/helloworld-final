@@ -41,6 +41,8 @@ public:
 	void SetModel(shared_ptr<Model> model);
 	void AddComponent(shared_ptr<Component> component);
 
+	shared_ptr<Model>& GetModel() { return _model; }
+	
 	GAMEOBJECT_TYPE GetGameObjectType() { return _type; }
 
 	virtual void OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider>other);
@@ -53,13 +55,12 @@ public:
 	vector<shared_ptr<Component>> _component;
 
 	shared_ptr<Transform> _transform;
+
+private:
+
 	shared_ptr<Material> _material;
 	shared_ptr<Model> _model;
 	shared_ptr<BaseCollider> _collider;
-
-	vec3 _totalCenter{};
-	vec3 _totalSize{};
-	float _totalRadius{};
 
 
 };

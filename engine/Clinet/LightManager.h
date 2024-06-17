@@ -44,7 +44,7 @@ public:
 		return &Manager;
 	}
 
-	void PushLight(LightInfo info);
+	int PushLight(LightInfo info);
 	void SetData();
 
 	LightParams& GetParams() { return _lightParmas; }

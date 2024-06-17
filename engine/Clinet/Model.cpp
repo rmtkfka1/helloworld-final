@@ -10,7 +10,7 @@
 #include <iostream>
 #include "Transform.h"
 #include "Helper.h"
-Model::Model():ResourceBase(ResourceType::Model)
+Model::Model():ResourceBase(ResourceType::Model),Component(COMPONENT_TYPE::MODEL)
 {
 
 }
@@ -357,6 +357,8 @@ void Model::MakeTransform()
 	{
 		data->bone->transform->SetCenter(data->box.Center);
 	}
+
+	
 }
 
 

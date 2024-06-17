@@ -23,6 +23,7 @@
 #include "LightManager.h"
 #include <random>
 #include "Player.h"
+#include "House.h"
 
 
 default_random_engine dre;
@@ -43,37 +44,36 @@ Stage1::~Stage1()
 
 void Stage1::Init()
 {
-	
 
+	AddLight();
+	
 	{
 		shared_ptr<Player> player = make_shared<Player>();
 
 		shared_ptr<Model> model = Model::ReadData(L"helicpoterss/helicpoter");
 		player->SetModel(model);
 		player->AddComponent(make_shared<BoxCollider>());
+
+		player->GetModel()->GetRoot()->transform->SetLocalPosition(vec3(0, 300.0f, 0));
 		ObjectManager::GetInstance()->_player = player;
 		AddGameObject(player);
 	}
 
 	{
-		shared_ptr<GameObject> gameobject = make_shared<GameObject>();
-		shared_ptr<Transform> transform = make_shared<Transform>();
-		gameobject->_transform = transform;
-		shared_ptr<Model> model = Model::ReadData(L"sphere/sphere");
+		shared_ptr<GameObject> house = make_shared<GameObject>();
 
-		auto& mateirals = model->GetMaterials();
+		shared_ptr<Model> model = Model::ReadData(L"mushroom/mushroom");
+		house->SetModel(model);
 
-		ShaderInfo info{ RASTERIZER_TYPE::CULL_FRONT,DEPTH_STENCILE_TYPE::LESS_EQUAL };
-		for (auto& mateiral : mateirals)
-		{
-			shared_ptr<Shader> shader = make_unique<Shader>();
-			shader->Init(L"sky.hlsl", info);
-			mateiral->SetShader(shader);
-		}
-
-		gameobject->SetModel(model);
-		AddGameObject(gameobject);
+		house->AddComponent(make_shared<BoxCollider>());
+		house->GetModel()->GetRoot()->transform->SetLocalScale(vec3(20.0f, 20.0f, 20.0f));
+		AddGameObject(house);
 	}
+
+
+
+
+
 
 
 	CameraManager::GetInstance()->Init();
@@ -83,6 +83,8 @@ void Stage1::Init()
 
 void Stage1::Update()
 {
+
+	LightManager::GetInstnace()->SetData();
 	CameraManager::GetInstance()->Update();
 	Super::Update();
 }
@@ -108,6 +110,21 @@ void Stage1::ClearScene()
 	{
 		SceneManger::GetInstance()->ChangeScene(SceneType::STAGE1);
 	}
+
+}
+
+void Stage1::AddLight()
+{
+	LightInfo info;
+
+	info.lightType = static_cast<int32>(LIGHT_TYPE::DIRECTIONAL_LIGHT);
+	info.color.ambient = vec4(0.1f, 0.1f, 0.1f, 0.1f);
+	info.color.diffuse = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	info.color.specular = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+
+	info.direction = vec4(0, -1.0f, 0, 0);
+	
+	LightManager::GetInstnace()->PushLight(info);
 
 }
 

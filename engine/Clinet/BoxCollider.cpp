@@ -35,7 +35,7 @@ void BoxCollider::Update()
 {
 
 
-	auto onwerTransform = GetOwner()->_model->GetBones()[0]->transform;
+	auto onwerTransform = GetOwner()->GetModel()->GetBones()[0]->transform;
 
 	_orginbox.Transform(_box, onwerTransform->GetMatrix());
 
@@ -53,7 +53,7 @@ void BoxCollider::Render()
 		core->GetCmdList()->IASetVertexBuffers(0, 1, &_mesh->GetVertexView());
 		core->GetCmdList()->IASetIndexBuffer(&_mesh->GetIndexView());
 
-		auto onwerTransform = GetOwner()->_model->GetBones()[1]->transform;
+		auto onwerTransform = GetOwner()->GetModel()->GetBones()[1]->transform;
 		onwerTransform->PushData();
 
 		core->GetTableHeap()->SetGraphicsRootDescriptorTable();

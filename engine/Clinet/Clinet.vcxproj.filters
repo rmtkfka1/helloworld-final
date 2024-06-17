@@ -202,6 +202,9 @@
     <ClInclude Include="Player.h">
       <Filter>Contents\Object</Filter>
     </ClInclude>
+    <ClInclude Include="House.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -340,6 +343,9 @@
       <Filter>Contents\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="House.cpp">
       <Filter>Contents\Object</Filter>
     </ClCompile>
   </ItemGroup>
