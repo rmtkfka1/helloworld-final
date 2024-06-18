@@ -59,7 +59,7 @@ void Stage1::Init()
 
 		ememy->GetTransformTree()->GetRoot()->SetLocalScale(vec3(1.0f, 1.0f, 1.0f));
 		ememy->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(-5000.0f, 0, 0));
-
+		ObjectManager::GetInstance()->_enemy = ememy;
 		AddGameObject(ememy);
 	}
 

@@ -214,6 +214,9 @@
     <ClInclude Include="Bullet.h">
       <Filter>Contents\Object</Filter>
     </ClInclude>
+    <ClInclude Include="EnenyBullet.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -364,6 +367,9 @@
       <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EnenyBullet.cpp">
       <Filter>Contents\Object</Filter>
     </ClCompile>
   </ItemGroup>

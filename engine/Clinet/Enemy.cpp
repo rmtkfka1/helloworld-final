@@ -5,6 +5,10 @@
 #include "Player.h"
 #include "ObjectManager.h"
 #include "TransformTree.h"
+#include "EnenyBullet.h"
+#include "BoxCollider.h"
+#include "SceneManger.h"
+#include "Scene.h"
 Enemy::Enemy():GameObject(GAMEOBJECT_TYPE::Enemy)
 {
 }
@@ -122,28 +126,24 @@ void Enemy::Fire()
         //ÃÑ¾Ë»ý¼º
         elapsedTime += dt;
 
-     /*   if (elapsedTime >= 5.0f)
+        if (elapsedTime >= 2.0f)
         {
             elapsedTime = 0.0f;
 
             shared_ptr <EnenyBullet> gameobject = make_shared<EnenyBullet>();
-            shared_ptr<Model> model = Model::ReadData(L"bullet/bullet");
+            shared_ptr<Model> model = Model::ReadData(L"Box/Box");
             gameobject->SetModel(model);
 
-            shared_ptr<Transform> transform = make_shared<Transform>();
-            gameobject->SetTransform(transform);
 
-            gameobject->_transform->SetLocalPosition(vec3(this->_transform->GetLocalPosition()));
-            gameobject->_transform->SetLocalRotation(vec3(this->_transform->GetLocalRotation()));
+  
+            vec3 pos = GetTransformTree()->findByName(L"canon_geo")->_position;
 
-            gameobject->_transform->SetLocalScale(vec3(5.0f, 5.0f, 5.0f));
-
-            gameobject->SetOwner(shared_from_this());
+            gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(pos);
+            gameobject->GetTransformTree()->GetRoot()->SetLocalScale(vec3(0.5f, 0.5f, 0.5f));
             gameobject->AddComponent(make_shared<BoxCollider>());
             gameobject->Init();
-
             SceneManger::GetInstance()->GetCurrentScene()->ReserveAddGameObject(gameobject);
 
-        }*/
+        }
     }
 }

@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "ConstantBuffer.h"
 #include "CameraManager.h"
+#include "Helper.h"
 Transform::Transform():Component(COMPONENT_TYPE::TRANSFORM)
 {
 }
@@ -34,6 +35,10 @@ void Transform::Update()
 	{
 		_matWorld *= parent->GetLocalToWorldMatrix();
 	}
+
+	Quaternion quat;
+	_matWorld.Decompose(_scale, quat, _position);
+	_rotation = Helper::ToEulerAngles(quat);
 
 	for (const shared_ptr<Transform>& child : _children)
 		child->Update();

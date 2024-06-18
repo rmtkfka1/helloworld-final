@@ -54,6 +54,10 @@ private:
 	vector<shared_ptr<Transform>> _children;
 
 public:
+	vec3 _scale;
+	vec3 _rotation;
+	vec3 _position;
+
 	vec3 _center{};
 	vec3 _size{};
 	float _totalRadius{};

@@ -82,12 +82,13 @@ void Player::KeyUpdate(std::shared_ptr<Transform>& rootTransform, float dt)
 		shared_ptr <Bullet> gameobject = make_shared<Bullet>();
 		shared_ptr<Model> model = Model::ReadData(L"box/box");
 		gameobject->SetModel(model);
-		
-		gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(this->GetTransformTree()->GetRoot()->GetLocalPosition()));
-		gameobject->GetTransformTree()->GetRoot()->SetLocalScale(vec3(0.1f, 0.1f, 0.1f));
-		auto& pos = gameobject->GetTransformTree()->GetRoot()->GetLocalPosition();
+		auto& pos = this->GetTransformTree()->GetRoot()->_position;
 
-		gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(pos+this->GetTransformTree()->GetRoot()->GetLook() * -1000.0f);
+
+		gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(pos);
+		gameobject->GetTransformTree()->GetRoot()->SetLocalScale(vec3(0.05f, 0.05f, 0.05f));
+
+
 		gameobject->Init();
 		gameobject->AddComponent(make_shared<BoxCollider>());
 		SceneManger::GetInstance()->GetCurrentScene()->ReserveAddGameObject(gameobject);

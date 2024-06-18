@@ -1,6 +1,7 @@
 #pragma once
 
 class Player;
+class Enemy;
 
 class ObjectManager
 {
@@ -15,6 +16,7 @@ public:
 public:
 
 	weak_ptr<Player> _player;
+	weak_ptr<Enemy> _enemy;
 
 };
 

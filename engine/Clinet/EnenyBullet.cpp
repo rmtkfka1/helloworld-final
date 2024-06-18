@@ -1,49 +1,44 @@
 #include "pch.h"
-#include "Bullet.h"
+#include "EnenyBullet.h"
 #include "ObjectManager.h"
+#include "Transform.h"
 #include "Player.h"
 #include "TransformTree.h"
-#include "Transform.h"
 #include "SceneManger.h"
-#include "CollisonManager.h"
 #include "Scene.h"
-Bullet::Bullet():GameObject(GAMEOBJECT_TYPE::Bullet)
-{
-
-}
-
-Bullet::~Bullet()
-{
-
-}
-
-void Bullet::Init()
+#include "CollisonManager.h"
+#include "Enemy.h"
+void EnenyBullet::Init()
 {
 	GameObject::Init();
-	_direction = ObjectManager::GetInstance()->_player.lock()->GetTransformTree()->GetRoot()->GetLook();
-	
 
+	auto& pos1 = ObjectManager::GetInstance()->_player.lock()->GetTransformTree()->GetRoot()->_position;
+	auto& pos2 = ObjectManager::GetInstance()->_enemy.lock()->GetTransformTree()->findByName(L"canon_geo")->_position;
+
+	vec3 result = pos1 - pos2;
+	result.Normalize();
+	_direction = result;
 }
-
-void Bullet::Update()
+void EnenyBullet::Update()
 {
 	PosUpdate();
 	DeleteBullet();
 	GameObject::Update();
+
 }
 
-void Bullet::Render()
+
+void EnenyBullet::Render()
 {
 	GameObject::Render();
 }
 
-void Bullet::DeleteBullet()
+void EnenyBullet::DeleteBullet()
 {
 
-	
 	_distance += 100.0f * TimeManager::GetInstance()->GetDeltaTime();
 
-	if (_distance > 20000.0f)
+	if (_distance > 2000.0f)
 	{
 		SceneManger::GetInstance()->GetCurrentScene()->ReserveDeleteGameObject(shared_from_this());
 		CollisonManager::GetInstance()->RemoveCollider(_collider);
@@ -51,7 +46,7 @@ void Bullet::DeleteBullet()
 
 }
 
-void Bullet::PosUpdate()
+void EnenyBullet::PosUpdate()
 {
 	float dt = TimeManager::GetInstance()->GetDeltaTime();
 	vec3 pos = _transformTree->GetRoot()->GetLocalPosition();

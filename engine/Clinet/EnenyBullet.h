@@ -1,12 +1,8 @@
 #pragma once
 #include "GameObject.h"
-class Bullet :public GameObject
+class EnenyBullet :public GameObject
 {
 public:
-
-
-	Bullet();
-	virtual ~Bullet();
 
 	virtual void Init() override;
 	virtual void Update() override;
@@ -15,13 +11,10 @@ public:
 	void DeleteBullet();
 	void PosUpdate();
 
-
-
 private:
-	float _speed = 1000000.0f;
 	vec3 _direction;
 	float _distance{};
-
+	float _speed = 3000.0f;
 
 };
 
