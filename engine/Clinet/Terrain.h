@@ -24,5 +24,8 @@ private:
 	shared_ptr<Mesh> _mesh;
 	shared_ptr<Material> _material;
 
+public:
+	shared_ptr<Transform> _transform;
+
 };
 

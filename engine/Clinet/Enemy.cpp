@@ -4,6 +4,7 @@
 #include "Model.h"
 #include "Player.h"
 #include "ObjectManager.h"
+#include "TransformTree.h"
 Enemy::Enemy():GameObject(GAMEOBJECT_TYPE::Enemy)
 {
 }
@@ -33,8 +34,8 @@ void Enemy::UpdateToLookAtPlayer()
     std::shared_ptr<Player> player = ObjectManager::GetInstance()->_player.lock();
     if (!player) return;
 
-    auto& playerPos = player->GetModel()->GetRoot()->transform->GetLocalPosition();
-    auto& enemyPos = this->GetModel()->GetRoot()->transform->GetLocalPosition();
+    auto& playerPos = player->GetTransformTree()->GetRoot()->GetLocalPosition();
+    auto& enemyPos = _transformTree->GetRoot()->GetLocalPosition();
 
     vec3 direction = enemyPos - playerPos;
     direction.Normalize();
@@ -53,5 +54,5 @@ void Enemy::UpdateToLookAtPlayer()
         0.0f, 0.0f, 0.0f, 1.0f
     );
 
-    this->GetModel()->GetRoot()->transform->SetRotateToPlayerMat(rotationMatrix);
+    _transformTree->GetRoot()->SetRotateToPlayerMat(rotationMatrix);
 }
