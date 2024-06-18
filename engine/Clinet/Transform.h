@@ -33,6 +33,7 @@ public:
 	void SetParent(shared_ptr<Transform> parent) { _parent = parent; }
 	weak_ptr<Transform> GetParent() { return _parent; }
 
+	void SetRotateToPlayerMat(Matrix m) { _rotateToPlayer = m; }
 	void SetCenter(vec3 center) { _center = center; }
 	void SetSize(vec3 size) { _size = size; }
 	wstring _name;
@@ -45,7 +46,7 @@ private:
 
 	Matrix _matLocal = {};
 	Matrix _matWorld = {};
-
+	Matrix _rotateToPlayer ={};
 	weak_ptr<Transform> _parent;
 	vector<shared_ptr<Transform>> _children;
 

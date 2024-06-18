@@ -23,9 +23,10 @@ void Player::Init()
 
 void Player::Update()
 {
+	float dt = TimeManager::GetInstance()->GetDeltaTime();
+
 	vector<shared_ptr<ModelBone>>& meshData = GetModel()->GetBones();
 	auto& rootTransform = GetModel()->GetRoot()->transform;
-	float dt = TimeManager::GetInstance()->GetDeltaTime();
 
 
 	static float temp = 0.1f;

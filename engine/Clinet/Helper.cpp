@@ -100,3 +100,48 @@ shared_ptr<Mesh> Helper::MakeSquareGrid(const int numSlices, const int numStacks
 
     return mesh;
 }
+
+shared_ptr<Mesh> Helper::MakeSquareGrid2(const int sizeX, const int sizeZ)
+{
+    vector<Vertex> vec;
+
+    for (int32 z = 0; z < sizeZ + 1; z++)
+    {
+        for (int32 x = 0; x < sizeX + 1; x++)
+        {
+            Vertex vtx;
+            vtx.position = vec3(static_cast<float>(x), 0, static_cast<float>(z));
+            vtx.uv = vec2(static_cast<float>(x), static_cast<float>(sizeZ - z));
+            vtx.normal = vec3(0.f, 1.f, 0.f);
+            vtx.tangent = vec3(1.f, 0.f, 0.f);
+
+            vec.push_back(vtx);
+        }
+    }
+
+    vector<uint32> idx;
+
+    for (int32 z = 0; z < sizeZ; z++)
+    {
+        for (int32 x = 0; x < sizeX; x++)
+        {
+            //  [0]
+            //   |	\
+			//  [2] - [1]
+            idx.push_back((sizeX + 1) * (z + 1) + (x));
+            idx.push_back((sizeX + 1) * (z)+(x + 1));
+            idx.push_back((sizeX + 1) * (z)+(x));
+            //  [1] - [2]
+            //   	\  |
+            //		  [0]
+            idx.push_back((sizeX + 1) * (z)+(x + 1));
+            idx.push_back((sizeX + 1) * (z + 1) + (x));
+            idx.push_back((sizeX + 1) * (z + 1) + (x + 1));
+        }
+    }
+
+
+    shared_ptr<Mesh> mesh = make_shared<Mesh>();
+    mesh->Init(vec, idx);
+    return mesh;
+}

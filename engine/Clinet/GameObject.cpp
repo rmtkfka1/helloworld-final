@@ -80,8 +80,6 @@ void GameObject::Render()
 
 		data->bone->transform->PushData();
 
-
-
 		if (data->material)
 		{
 			data->material->Update();
@@ -110,8 +108,7 @@ void GameObject::Render(uint32 instance , shared_ptr<StructedBuffer> buffer)
 		core->GetCmdList()->IASetVertexBuffers(0, _countof(pVertexBufferViews), pVertexBufferViews);
 		core->GetCmdList()->IASetIndexBuffer(&data->meshes->GetIndexView());
 
-	/*	data->bone->transform->PushData();*/
-		_transform->PushData();
+		data->bone->transform->PushData();
 
 		if (data->material)
 		{

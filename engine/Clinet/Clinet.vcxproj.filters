@@ -206,7 +206,10 @@
       <Filter>Contents\Object</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>Resource\ShaderFile</Filter>
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Contents\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +355,9 @@
       <Filter>Contents\Object</Filter>
     </ClCompile>
     <ClCompile Include="Terrain.cpp">
+      <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
       <Filter>Contents\Object</Filter>
     </ClCompile>
   </ItemGroup>

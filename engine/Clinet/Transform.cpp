@@ -15,8 +15,10 @@ void Transform::Update()
 	Matrix matTranslationBack = Matrix::CreateTranslation(-_center);
 	Matrix matTranslationBack2 = Matrix::CreateTranslation(_center);
 
+	//////////////////////////////////////
+	
 	// 변환 행렬을 순서대로 곱셈
-	_matLocal =  matScale * matRotation  * matTranslation  ;
+	_matLocal =  matScale * matRotation* _rotateToPlayer * matTranslation ;
 
 	_matWorld = _matLocal; 
 

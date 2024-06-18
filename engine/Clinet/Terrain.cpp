@@ -6,6 +6,7 @@
 #include "TableHeap.h"
 #include "Transform.h"
 #include "Component.h"
+#include <random>
 Terrain::Terrain():GameObject(GAMEOBJECT_TYPE::Terrain)
 {
 }
@@ -35,6 +36,8 @@ void Terrain::Update()
 
 void Terrain::Render()
 {
+	default_random_engine dre;
+	uniform_real_distribution<float> uid(-50.0f, 100.0f);
 
 	for (auto& i : _component)
 	{
@@ -48,7 +51,9 @@ void Terrain::Render()
 
 
 	_transform->PushData();
+	_material->SetFloat(0, uid(dre));
 	_material->Update();
+
 	
 	core->GetTableHeap()->SetGraphicsRootDescriptorTable();
 

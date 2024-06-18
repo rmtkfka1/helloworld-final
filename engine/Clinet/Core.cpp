@@ -86,7 +86,7 @@ void Core::StartRender()
 		_cmdList->RSSetViewports(1, &_viewport);
 		_cmdList->RSSetScissorRects(1, &_scissorRect);
 		D3D12_CPU_DESCRIPTOR_HANDLE backBufferView = _rtvHandle[_backBufferIndex];
-		_cmdList->ClearRenderTargetView(backBufferView, Colors::LightYellow, 0, nullptr);
+		_cmdList->ClearRenderTargetView(backBufferView, Colors::GreenYellow, 0, nullptr);
 
 		D3D12_CPU_DESCRIPTOR_HANDLE depthStencilView = _depthHeap->GetCPUDescriptorHandleForHeapStart();
 		_cmdList->ClearDepthStencilView(depthStencilView, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);

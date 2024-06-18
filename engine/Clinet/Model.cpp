@@ -23,19 +23,21 @@ Model::~Model()
 shared_ptr<Model> Model::ReadData(wstring filename)
 {
 	
-	shared_ptr<Model> model = ResourceManager::GetInstance()->Get<Model>(filename);
+	shared_ptr<Model> model;
+	/*ResourceManager::GetInstance()->Get<Model>(filename);*/
 
-	if (model)
-	{
-		return model;
-	};
+	//if (model)
+	//{
+	//	return model;
+	//};
 
 	model = make_shared<Model>();
 	model->SetName(filename);
 	model->ReadMaterial(filename);
 	model->ReadModel(filename);
-	ResourceManager::GetInstance()->Add<Model>(filename, model);
+	//ResourceManager::GetInstance()->Add<Model>(filename, model);
 	
+	return model;
 }
 
 

@@ -25,6 +25,7 @@
 #include "Player.h"
 #include "House.h"
 #include "Terrain.h"
+#include "Enemy.h"
 
 
 default_random_engine dre;
@@ -61,6 +62,17 @@ void Stage1::Init()
 	}
 
 	{
+		shared_ptr<Enemy> ememy = make_shared<Enemy>();
+
+		shared_ptr<Model> model = Model::ReadData(L"helicpoterss/helicpoter");
+		ememy->SetModel(model);
+		ememy->AddComponent(make_shared<BoxCollider>());
+
+		ememy->GetModel()->GetRoot()->transform->SetLocalPosition(vec3(0, 100.0f, 0));
+		AddGameObject(ememy);
+	}
+
+	{
 		shared_ptr<House> house = make_shared<House>();
 
 		shared_ptr<Model> model = Model::ReadData(L"mushroom/mushroom");
@@ -72,12 +84,13 @@ void Stage1::Init()
 		AddGameObject(house);
 	}
 
+	
 
 	{
 
 		shared_ptr<Terrain> terrain = make_shared<Terrain>();
 
-		shared_ptr<Mesh> mesh = Helper::MakeSquareGrid(500, 500, 200.0f, vec2(10, 10));
+		shared_ptr<Mesh> mesh = Helper::MakeSquareGrid(200, 200, 2000.0f, vec2(30, 30));
 		terrain->AddMesh(mesh);
 
 		shared_ptr<Material> material = make_shared<Material>();
@@ -85,16 +98,17 @@ void Stage1::Init()
 		material->SetName(L"terrian_mateiral");
 
 		shared_ptr<Texture> diffuse = make_shared<Texture>();
-		diffuse->Init(L"../Resources/Texture/terrian/Diffuse Map PNG.png");
+		diffuse->Init(L"../Resources/Texture/terrian/terrain.png");
 
 		shared_ptr<Texture> height = make_shared<Texture>();
-		height->Init(L"../Resources/Texture/terrian/Height Map PNG.png");
+		height->Init(L"../Resources/Texture/terrian/he.png");
 
 		material->SetHeightTexture(height);
 		material->SetDiffuseTexture(diffuse);
 
 		shared_ptr<Shader> shader = make_shared<Shader>();
 		ShaderInfo info;
+	
 
 		shader->Init(L"color.hlsl", info);
 
@@ -110,9 +124,6 @@ void Stage1::Init()
 
 		AddGameObject(terrain);
 	}
-
-
-
 
 
 

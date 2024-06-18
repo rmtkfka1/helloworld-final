@@ -120,7 +120,7 @@ void CameraManager::CameraPosUpdate()
     float length = direction.Length();
     direction.Normalize();
 
-    float distance = length * 10.0f * TimeManager::GetInstance()->GetDeltaTime();
+    float distance = length * 15.0f * TimeManager::GetInstance()->GetDeltaTime();
 
     _cameraPos = _cameraPos + direction * distance;
 }

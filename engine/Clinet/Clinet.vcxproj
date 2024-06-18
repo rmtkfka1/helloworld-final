@@ -184,6 +184,7 @@
     <ClInclude Include="Clinet.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="d3dx12.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="FileUtils.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Core.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="Clinet.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
