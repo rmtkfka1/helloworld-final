@@ -19,7 +19,13 @@ void Enemy::Init()
 
 void Enemy::Update()
 {
+ 
+
+    UpdatePos();
+
     UpdateToLookAtPlayer();
+
+    Fire();
 
     GameObject::Update();
 }
@@ -27,6 +33,35 @@ void Enemy::Update()
 void Enemy::Render()
 {
 	GameObject::Render();
+
+
+}
+
+void Enemy::UpdatePos()
+{
+  
+    float dt = TimeManager::GetInstance()->GetDeltaTime();
+    vec3 pos = _transformTree->GetRoot()->GetLocalPosition();
+
+
+    if (movingForward) 
+    {
+        pos += _transformTree->GetRoot()->GetLook() * _speed * dt;
+        distance += 100.0f * dt;
+    }
+    else
+    {
+        pos -= _transformTree->GetRoot()->GetLook() * _speed * dt;
+        distance += 100.0f * dt;
+    }
+
+    if (distance > 800.0f)
+    {
+        distance = 0;
+        movingForward = !movingForward;
+    }
+
+    _transformTree->GetRoot()->SetLocalPosition(vec3(pos.x, pos.y, pos.z));
 }
 
 void Enemy::UpdateToLookAtPlayer()
@@ -54,5 +89,61 @@ void Enemy::UpdateToLookAtPlayer()
         0.0f, 0.0f, 0.0f, 1.0f
     );
 
-    _transformTree->GetRoot()->SetRotateToPlayerMat(rotationMatrix);
+
+    static float temp = 1.0f;
+    _transformTree->findByName(L"turret_geo")->SetRotateToPlayerMat(rotationMatrix);
+    {
+        vec3 pos = _transformTree->findByName(L"r_front_wheel_geo")->GetLocalRotation();
+        _transformTree->findByName(L"r_front_wheel_geo")->SetLocalRotation(vec3(pos.x+temp, pos.y, pos.z));
+    }
+
+    {
+        vec3 pos = _transformTree->findByName(L"l_back_wheel_geo")->GetLocalRotation();
+        _transformTree->findByName(L"l_back_wheel_geo")->SetLocalRotation(vec3(pos.x + temp, pos.y, pos.z));
+    }
+
+    {
+        vec3 pos = _transformTree->findByName(L"r_back_wheel_geo")->GetLocalRotation();
+        _transformTree->findByName(L"r_back_wheel_geo")->SetLocalRotation(vec3(pos.x + temp, pos.y, pos.z));
+    }
+
+    {
+        vec3 pos = _transformTree->findByName(L"l_front_wheel_geo")->GetLocalRotation();
+        _transformTree->findByName(L"l_front_wheel_geo")->SetLocalRotation(vec3(pos.x + temp, pos.y, pos.z));
+    }
+
+    temp += 0.1f;
+}
+
+void Enemy::Fire()
+{
+    float dt = TimeManager::GetInstance()->GetDeltaTime();
+    {
+        //ÃÑ¾Ë»ý¼º
+        elapsedTime += dt;
+
+     /*   if (elapsedTime >= 5.0f)
+        {
+            elapsedTime = 0.0f;
+
+            shared_ptr <EnenyBullet> gameobject = make_shared<EnenyBullet>();
+            shared_ptr<Model> model = Model::ReadData(L"bullet/bullet");
+            gameobject->SetModel(model);
+
+            shared_ptr<Transform> transform = make_shared<Transform>();
+            gameobject->SetTransform(transform);
+
+            gameobject->_transform->SetLocalPosition(vec3(this->_transform->GetLocalPosition()));
+            gameobject->_transform->SetLocalRotation(vec3(this->_transform->GetLocalRotation()));
+
+            gameobject->_transform->SetLocalScale(vec3(5.0f, 5.0f, 5.0f));
+
+            gameobject->SetOwner(shared_from_this());
+            gameobject->AddComponent(make_shared<BoxCollider>());
+            gameobject->Init();
+
+            SceneManger::GetInstance()->GetCurrentScene()->ReserveAddGameObject(gameobject);
+
+        }*/
+    }
 }

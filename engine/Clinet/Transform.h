@@ -53,6 +53,7 @@ private:
 	weak_ptr<Transform> _parent;
 	vector<shared_ptr<Transform>> _children;
 
+public:
 	vec3 _center{};
 	vec3 _size{};
 	float _totalRadius{};

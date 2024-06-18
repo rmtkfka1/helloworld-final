@@ -303,8 +303,6 @@ void Converter::WriteModelFile(wstring finalPath)
 void Converter::CalculateBoundingBox()
 {
 
-	cout << "BoudningBox 정보 출력" << endl;
-
 	for (int i = 0; i < _meshes.size(); ++i)
 	{
 		auto& box = _meshes[i]->box;
@@ -313,23 +311,47 @@ void Converter::CalculateBoundingBox()
 		BoundingBox::CreateFromPoints(box, (size_t)_meshes[i]->vertices.size(), &_meshes[i]->vertices[0].position, (size_t)sizeof(Vertex));
 		BoundingSphere::CreateFromPoints(sphere, (size_t)_meshes[i]->vertices.size(), &_meshes[i]->vertices[0].position, (size_t)sizeof(Vertex));
 
-		cout << "new :" <<  _meshes[i]->name << endl;
-		cout << "사이즈"<<  box.Extents.x << " , " << box.Extents.y << " ," << box.Extents.z << endl;
-		cout << "중심점"<<  box.Center.x << " , " << box.Center.y << " ," << box.Center.z << endl;
+		cout << "new :" << _meshes[i]->name << endl;
+		cout << "사이즈" << box.Extents.x << " , " << box.Extents.y << " ," << box.Extents.z << endl;
+		cout << "중심점" << box.Center.x << " , " << box.Center.y << " ," << box.Center.z << endl;
 		cout << "===========================================================" << endl;
 
 		sphere.Center = box.Center;
 
+		cout << "new :" << _meshes[i]->name << endl;
+		cout << "반지름" << sphere.Radius << endl;
+		cout << "중심점" << sphere.Center.x << " , " << sphere.Center.y << " ," << sphere.Center.z << endl;
+		cout << "===========================================================" << endl;
+
 	}
-	
-	_totalbox = _meshes[0]->box;
-	_totalSphere = _meshes[0]->sphere;
+
+	if (_meshes.size() >= 2)
+	{
+		_totalbox = _meshes[0]->box;
+		_totalSphere = _meshes[0]->sphere;
+		for (int i = 1; i < _meshes.size(); ++i)
+		{
+			BoundingBox::CreateMerged(_totalbox, _totalbox, _meshes[i]->box);
+			BoundingSphere::CreateMerged(_totalSphere, _totalSphere, _meshes[i]->sphere);
+		}
+	}
+
+	if (_meshes.size() == 1)
+	{
+		_totalbox = _meshes[0]->box;
+		_totalSphere = _meshes[0]->sphere;
+	}
 
 	cout << "totalBox" << endl;
 	cout << "사이즈" << _totalbox.Extents.x << " , " << _totalbox.Extents.y << " ," << _totalbox.Extents.z << endl;
 	cout << "중심점" << _totalbox.Center.x << " , " << _totalbox.Center.y << " ," << _totalbox.Center.z << endl;
 	cout << "===========================================================" << endl;
 
+
+	cout << "totalSphere" << endl;
+	cout << "반지름" << _totalSphere.Radius << endl;
+	cout << "중심점" << _totalSphere.Center.x << " , " << _totalSphere.Center.y << " ," << _totalSphere.Center.z << endl;
+	cout << "===========================================================" << endl;
 
 
 

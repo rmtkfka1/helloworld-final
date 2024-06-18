@@ -5,6 +5,10 @@
 #include "LightManager.h"
 #include "Helper.h"
 #include "TransformTree.h"
+#include "Bullet.h"
+#include "BoxCollider.h"
+#include "SceneManger.h"
+#include "Scene.h"
 
 Player::Player():GameObject(GAMEOBJECT_TYPE::Player)
 {
@@ -70,6 +74,28 @@ void Player::KeyUpdate(std::shared_ptr<Transform>& rootTransform, float dt)
 		pos -= rootTransform->GetRight() * _speed * dt;
 		rootTransform->SetLocalPosition(pos);
 	};
+
+
+	if (KeyManager::GetInstance()->GetButtonDown(KEY_TYPE::SPACE))
+	{
+
+		shared_ptr <Bullet> gameobject = make_shared<Bullet>();
+		shared_ptr<Model> model = Model::ReadData(L"box/box");
+		gameobject->SetModel(model);
+		
+		gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(this->GetTransformTree()->GetRoot()->GetLocalPosition()));
+		gameobject->GetTransformTree()->GetRoot()->SetLocalScale(vec3(0.1f, 0.1f, 0.1f));
+		auto& pos = gameobject->GetTransformTree()->GetRoot()->GetLocalPosition();
+
+		gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(pos+this->GetTransformTree()->GetRoot()->GetLook() * -1000.0f);
+		gameobject->Init();
+		gameobject->AddComponent(make_shared<BoxCollider>());
+		SceneManger::GetInstance()->GetCurrentScene()->ReserveAddGameObject(gameobject);
+
+	};
+
+
+	
 }
 
 void Player::Render()

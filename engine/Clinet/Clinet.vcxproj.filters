@@ -211,6 +211,9 @@
     <ClInclude Include="TransformTree.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Contents\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -359,6 +362,9 @@
     </ClCompile>
     <ClCompile Include="TransformTree.cpp">
       <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Contents\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

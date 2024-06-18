@@ -51,35 +51,37 @@ void Stage1::Init()
 	AddLight();
 	
 	{
+		shared_ptr<Enemy> ememy = make_shared<Enemy>();
+
+		shared_ptr<Model> model = Model::ReadData(L"Tank/Tank");
+		ememy->SetModel(model);
+		ememy->AddComponent(make_shared<BoxCollider>());
+
+		ememy->GetTransformTree()->GetRoot()->SetLocalScale(vec3(1.0f, 1.0f, 1.0f));
+		ememy->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(-5000.0f, 0, 0));
+
+		AddGameObject(ememy);
+	}
+
+	{
 		shared_ptr<Player> player = make_shared<Player>();
 
 		shared_ptr<Model> model = Model::ReadData(L"helicpoter/helicpoter");
 		player->SetModel(model);
 		player->AddComponent(make_shared<BoxCollider>());
 
+		player->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(-3000.0f,300.0f, 0));
 		ObjectManager::GetInstance()->_player = player;
 		AddGameObject(player);
 	}
 
-	{
-		shared_ptr<Enemy> ememy = make_shared<Enemy>();
 
-		shared_ptr<Model> model = Model::ReadData(L"helicpoter/helicpoter");
-		ememy->SetModel(model);
-		ememy->AddComponent(make_shared<BoxCollider>());
-
-		ememy->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(0, 100.0f, 0));
-		AddGameObject(ememy);
-	}
-
-	
-	
 
 	{
 
 		shared_ptr<Terrain> terrain = make_shared<Terrain>();
 
-		shared_ptr<Mesh> mesh = Helper::MakeSquareGrid(200, 200, 2000.0f, vec2(30, 30));
+		shared_ptr<Mesh> mesh = Helper::MakeSquareGrid(200, 200, 5000.0f, vec2(30, 30));
 		terrain->AddMesh(mesh);
 
 		shared_ptr<Material> material = make_shared<Material>();
@@ -104,8 +106,8 @@ void Stage1::Init()
 		shared_ptr<Transform> transform = make_shared<Transform>();
 		terrain->_transform = transform;
 
-		terrain->_transform->SetLocalPosition(vec3(0, -50.0f, 0));
-		terrain->_transform->SetLocalRotation(vec3(90.0f, 0, 0));
+		terrain->_transform->SetLocalPosition(vec3(-1000.0f, -50.0f, 0));
+		terrain->_transform->SetLocalRotation(vec3(XMConvertToRadians(90.0f), 0, 0));
 
 		material->SetShader(shader);
 

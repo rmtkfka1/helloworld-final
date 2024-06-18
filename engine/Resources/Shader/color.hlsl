@@ -34,7 +34,7 @@ VS_OUT VS_Main(VS_IN input)
     float height = height_texture.SampleLevel(sam_0, input.uv, 0).r;
     height = height * 2.0f - 1.0;
     
-    output.pos.y += height * 100 + hit;
+    output.pos += float4(output.worldNormal * height * 100, 0.0f);
     
     output.pos = mul(output.pos, ViewMatrix);
     output.pos = mul(output.pos, ProjectionMatrix);

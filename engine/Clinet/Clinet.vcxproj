@@ -178,6 +178,7 @@
     </ClInclude>
     <ClInclude Include="BaseCollider.h" />
     <ClInclude Include="BoxCollider.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="CollisonManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CameraManager.h" />
@@ -263,6 +264,7 @@
     </ClCompile>
     <ClCompile Include="BaseCollider.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="CollisonManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CameraManager.cpp" />

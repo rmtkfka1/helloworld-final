@@ -62,11 +62,24 @@ void TransformTree::MakeTransformTree()
 
 			transform->SetParent(map[bone->parentIndex]);
 			transform->GetParent().lock()->AddChild(transform);
-
 			map[bone->index] = transform;
 			_nameMap[transform->_name] = transform;
 		}
 	}
+
+	vector<shared_ptr<ModelMesh>>& meshes = GetOwner()->GetModel()->GetMeshes();
+	for (auto& data : meshes)
+	{
+		shared_ptr<Transform> transform = _nameMap[data->name];
+
+		if(transform)
+			transform->SetCenter(data->box.Center);
+
+		if (transform)
+			transform->SetSize(data->box.Extents);
+
+	}
+
 }
 
 

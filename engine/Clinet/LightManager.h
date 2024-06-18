@@ -28,7 +28,7 @@ struct LightParams
 {
 	LightInfo	LightInfos[100];
 	uint32		lightCount =0;
-	float		cutoff =cosf(XMConvertToRadians(20.0f));
+	float		cutoff =cosf(XMConvertToRadians(10.0f));
 	int			padding2{};
 	int			padding3{};
 };

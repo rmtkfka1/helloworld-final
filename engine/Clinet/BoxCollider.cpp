@@ -54,9 +54,8 @@ void BoxCollider::Render()
 		core->GetCmdList()->IASetVertexBuffers(0, 1, &_mesh->GetVertexView());
 		core->GetCmdList()->IASetIndexBuffer(&_mesh->GetIndexView());
 
-		auto onwerTransform = GetOwner()->GetTransformTree()->GetRoot();
-		onwerTransform->PushData();
-
+		GetOwner()->GetTransformTree()->GetRoot()->PushData();
+	
 		core->GetTableHeap()->SetGraphicsRootDescriptorTable();
 
 		core->GetCmdList()->DrawIndexedInstanced(_mesh->GetIndexCount(), 1, 0, 0, 0);

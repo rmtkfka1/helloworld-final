@@ -11,8 +11,16 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 
+	void UpdatePos();
 	void UpdateToLookAtPlayer();
-private:
+	void Fire();
 
+private:
+	float elapsedTime = 0.0f;
+	float _rotationSpeed = 1.0f;
+	float _speed = 1000.0f;
+
+	bool movingForward = false;
+	float distance = 0;
 };
 

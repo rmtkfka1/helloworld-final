@@ -90,6 +90,7 @@ public:
 
 	vec3 _totalCenter{};
 	vec3 _totalSize{};
+	BoundingBox box;
 	float _totalRadius{};
 };
 
