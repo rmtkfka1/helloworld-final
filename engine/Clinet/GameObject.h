@@ -9,6 +9,7 @@ class Material;
 class Component;
 class BaseCollider;
 class StructedBuffer;
+class TransformTree;
 
 enum class GAMEOBJECT_TYPE
 {
@@ -37,13 +38,11 @@ public:
 	virtual void Render();
 	virtual void Render(uint32 instance,  shared_ptr<StructedBuffer> buffer);
 
-	void SetTransform(shared_ptr<Transform> transform);
-	void MakeModelTransform();
-
+	
 	void SetMaterial(shared_ptr<Material> material) { _material = material; }
 	void SetModel(shared_ptr<Model> model);
 	void AddComponent(shared_ptr<Component> component);
-
+	shared_ptr<TransformTree>& GetTransformTree() { return _transformTree; }
 	shared_ptr<Model>& GetModel() { return _model; }
 	
 	GAMEOBJECT_TYPE GetGameObjectType() { return _type; }
@@ -54,15 +53,15 @@ public:
 public:
 
 	GAMEOBJECT_TYPE _type =GAMEOBJECT_TYPE::None;
+
 	vector<shared_ptr<Component>> _component;
-	shared_ptr<Transform> _rootTransform;
 
-private:
 
+protected:
+	shared_ptr<TransformTree> _transformTree;
 	shared_ptr<Material> _material;
 	shared_ptr<Model> _model;
 	shared_ptr<BaseCollider> _collider;
-
 
 };
 

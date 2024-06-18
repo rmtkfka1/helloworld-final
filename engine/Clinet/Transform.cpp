@@ -3,6 +3,12 @@
 #include "Core.h"
 #include "ConstantBuffer.h"
 #include "CameraManager.h"
+Transform::Transform():Component(COMPONENT_TYPE::TRANSFORM)
+{
+}
+Transform::~Transform()
+{
+}
 void Transform::Update()
 {
 	Matrix matScale = Matrix::CreateScale(_localScale);

@@ -52,16 +52,14 @@ void Stage1::Init()
 	{
 		shared_ptr<Player> player = make_shared<Player>();
 
-		shared_ptr<Model> model = Model::ReadData(L"helicpoterss/helicpoter");
+		shared_ptr<Model> model = Model::ReadData(L"helicpoter/helicpoter");
 		player->SetModel(model);
-		player->AddComponent(make_shared<BoxCollider>());
 
-		player->GetModel()->GetRoot()->transform->SetLocalPosition(vec3(0, 300.0f, 0));
 		ObjectManager::GetInstance()->_player = player;
 		AddGameObject(player);
 	}
 
-	{
+	/*{
 		shared_ptr<Enemy> ememy = make_shared<Enemy>();
 
 		shared_ptr<Model> model = Model::ReadData(L"helicpoterss/helicpoter");
@@ -123,7 +121,7 @@ void Stage1::Init()
 		terrain->AddMaterial(material);
 
 		AddGameObject(terrain);
-	}
+	}*/
 
 
 

@@ -5,7 +5,9 @@ enum class COMPONENT_TYPE:uint8
 {
 	COLLIDER,
 	SCRIPTS,
-	MODEL
+	MODEL,
+	TRANSFORM,
+	TRASNFORMTREE
 };
 
 class Component

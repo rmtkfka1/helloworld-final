@@ -163,9 +163,6 @@
     <ClInclude Include="Model.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts.h">
       <Filter>Resource\Component\Scripts</Filter>
     </ClInclude>
@@ -193,9 +190,6 @@
     <ClInclude Include="LightManager.h">
       <Filter>Engine\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="StartScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Contents\Object</Filter>
     </ClInclude>
@@ -210,6 +204,12 @@
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Contents\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformTree.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -345,9 +345,6 @@
     <ClCompile Include="LightManager.cpp">
       <Filter>Engine\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="StartScene.cpp">
-      <Filter>Contents\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Contents\Object</Filter>
     </ClCompile>
@@ -359,6 +356,9 @@
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>Contents\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformTree.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

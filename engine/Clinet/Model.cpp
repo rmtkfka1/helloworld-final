@@ -23,18 +23,19 @@ Model::~Model()
 shared_ptr<Model> Model::ReadData(wstring filename)
 {
 	
-	shared_ptr<Model> model =ResourceManager::GetInstance()->Get<Model>(filename);
+	shared_ptr<Model> model;
+	/*ResourceManager::GetInstance()->Get<Model>(filename);*/
 
-	if (model)
-	{
-		return model;
-	};
+	//if (model)
+	//{
+	//	return model;
+	//};
 
 	model = make_shared<Model>();
 	model->SetName(filename);
 	model->ReadMaterial(filename);
 	model->ReadModel(filename);
-	ResourceManager::GetInstance()->Add<Model>(filename, model);
+	//ResourceManager::GetInstance()->Add<Model>(filename, model);
 	
 	return model;
 }
@@ -325,42 +326,9 @@ void Model::ReadModel(wstring filename)
 
 	BindCacheInfo();
 	
-	//MakeTransform();
 }
 
-//void Model::MakeTransform()
-//{
-//	for (auto& bone : _boneData)
-//	{
-//		bone->transform = make_shared<Transform>();
-//
-//		Matrix m = bone->transformData;
-//
-//		vec3 pos;
-//		Quaternion rotation;
-//		vec3 scale;
-//		m.Decompose(scale, rotation, pos);
-//
-//		bone->transform->_name = bone->name;
-//		bone->transform->SetLocalPosition(pos);
-//		bone->transform->SetLocalRotation(Helper::ToEulerAngles(rotation));
-//		bone->transform->SetLocalScale(scale);
-//		bone->transform->Update();
-//		
-//		if (bone->parentIndex > 0)
-//		{
-//			bone->transform->SetParent(bone->parent->transform);
-//			bone->parent->transform->AddChild(bone->transform);
-//		}
-//	}
-//
-//	for (auto& data : _meshData)
-//	{
-//		data->bone->transform->SetCenter(data->box.Center);
-//	}
-//
-//	
-//}
+
 
 
 std::shared_ptr<Material> Model::GetMaterialByName(const wstring& name)

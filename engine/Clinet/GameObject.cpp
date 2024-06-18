@@ -17,6 +17,7 @@
 #include "CollisonManager.h"
 #include "SphereCollider.h"
 #include "StructedBuffer.h"
+#include "TransformTree.h"
 
 
 GameObject::GameObject()
@@ -47,12 +48,7 @@ void GameObject::Init()
 void GameObject::Update()
 {
 	
-	vector<shared_ptr<ModelBone>>& meshData = _model->GetBones();
-
-	for (auto& data : meshData)
-	{
-		data->transform->Update();
-	}
+	_transformTree->GetRoot()->Update();
 
 	for (auto& compoent : _component)
 	{
@@ -78,7 +74,7 @@ void GameObject::Render()
 		core->GetCmdList()->IASetIndexBuffer(&data->meshes->GetIndexView());
 
 
-		data->bone->transform->PushData();
+		_transformTree->findByName(data->name)->PushData();
 
 		if (data->material)
 		{
@@ -108,7 +104,7 @@ void GameObject::Render(uint32 instance , shared_ptr<StructedBuffer> buffer)
 		core->GetCmdList()->IASetVertexBuffers(0, _countof(pVertexBufferViews), pVertexBufferViews);
 		core->GetCmdList()->IASetIndexBuffer(&data->meshes->GetIndexView());
 
-		data->bone->transform->PushData();
+		_transformTree->findByName(data->name)->PushData();
 
 		if (data->material)
 		{
@@ -122,50 +118,13 @@ void GameObject::Render(uint32 instance , shared_ptr<StructedBuffer> buffer)
 }
 
 
-void GameObject::SetTransform(shared_ptr<Transform> transform)
-{
-	_rootTransform = transform;
-}
-
-void GameObject::MakeModelTransform()
-{
-	_rootTransform = make_shared<Transform>();
-
-	for (auto& bone : _model->GetBones())
-	{
-		//모델에 저장되있는 계층적 데이터를 가져옴
-		Matrix m = bone->transformData;
-
-		vec3 pos;
-		Quaternion rotation;
-		vec3 scale;
-		m.Decompose(scale, rotation, pos);
-
-		_rootTransform->_name = bone->name;
-		
-		_rootTransform->SetLocalPosition(pos);
-		_rootTransform->SetLocalRotation(Helper::ToEulerAngles(rotation));
-		_rootTransform->SetLocalScale(scale);
-		_rootTransform->Update();
-
-		if (bone->parentIndex > 0)
-		{
-			_rootTransform->SetParent();
-			bone->parent->transform->AddChild(bone->transform);
-		}
-	};
-		
-	for (auto& data : _meshData)
-	{
-		data->bone->transform->SetCenter(data->box.Center);
-	};
-}
-
-
 
 void GameObject::SetModel(shared_ptr<Model> model)
 {
 	_model = model;
+	_transformTree = make_shared<TransformTree>();
+	_transformTree->SetOwner(shared_from_this());
+	_transformTree->MakeTransformTree();
 }
 
 

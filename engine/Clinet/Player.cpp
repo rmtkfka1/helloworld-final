@@ -4,7 +4,7 @@
 #include "Transform.h"
 #include "LightManager.h"
 #include "Helper.h"
-
+#include "TransformTree.h"
 
 Player::Player():GameObject(GAMEOBJECT_TYPE::Player)
 {
@@ -25,22 +25,13 @@ void Player::Update()
 {
 	float dt = TimeManager::GetInstance()->GetDeltaTime();
 
-	vector<shared_ptr<ModelBone>>& meshData = GetModel()->GetBones();
-	auto& rootTransform = GetModel()->GetRoot()->transform;
-
 
 	static float temp = 0.1f;
+	shared_ptr<Transform>& transform = _transformTree->findByName(L"Top_Rotor");
+	auto& pos = transform->GetLocalRotation();
+	transform->SetLocalRotation(vec3(pos.x, pos.y + temp, pos.z));
 
-	for (auto& data : meshData)
-	{
-		if (data->name == L"Top_Rotor")
-		{
-			auto& pos = data->transform->GetLocalRotation();
-			data->transform->SetLocalRotation(vec3(pos.x, pos.y + temp, pos.z));
-		}
-	}
-
-	KeyUpdate(rootTransform, dt);
+	KeyUpdate(_transformTree->GetRoot(), dt);
 	GameObject::Update();
 	UpdateLight();
 
@@ -101,6 +92,7 @@ void Player::AddLight()
 void Player::UpdateLight()
 {
 	auto& params = LightManager::GetInstnace()->_lightParmas;
-	params.LightInfos[_lightIndex].position = this->GetModel()->GetRoot()->transform->GetLocalPosition();
-	params.LightInfos[_lightIndex].direction = this->GetModel()->GetRoot()->transform->GetLook();
+
+	params.LightInfos[_lightIndex].position = _transformTree->GetRoot()->GetLocalPosition();
+	params.LightInfos[_lightIndex].direction = _transformTree->GetRoot()->GetLook();
 }

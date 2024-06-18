@@ -18,12 +18,12 @@ SphereCollider::~SphereCollider()
 
 void SphereCollider::Init()
 {
-	_orginsphere.Transform(_sphere, GetOwner()->_transform->GetMatrix());
+	/*_orginsphere.Transform(_sphere, GetOwner()->_transform->GetMatrix());*/
 }
 
 void SphereCollider::Update()
 {
-	_orginsphere.Transform(_sphere, GetOwner()->_transform->GetMatrix());
+	
 }
 
 void SphereCollider::Render()

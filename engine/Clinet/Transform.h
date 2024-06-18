@@ -1,7 +1,10 @@
 #pragma once
-class Transform
+#include "Component.h"
+class Transform:public Component
 {
 public:
+	Transform();
+	virtual ~Transform();
 
 	void Update();
 	void PushData();

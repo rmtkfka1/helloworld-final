@@ -10,6 +10,7 @@
 #include <random>
 #include "Player.h"
 #include "Model.h"
+#include "TransformTree.h"
 
 std::default_random_engine generator;
 std::uniform_real_distribution<float> distribution(-1.0f, 1.0f);
@@ -33,7 +34,7 @@ void CameraManager::Init()
     _mousePos = _centerScreen;
 
     _player = ObjectManager::GetInstance()->_player.lock();
-    auto& transform = _player.lock()->GetModel()->GetRoot()->transform;
+    auto& transform = _player.lock()->GetTransformTree()->GetRoot();
     transform->GetLook().Normalize();
 
 
@@ -65,7 +66,7 @@ void CameraManager::Update()
 
 void CameraManager::MouseUpdate()
 {
-    auto& transform = _player.lock()->GetModel()->GetRoot()->transform;
+    auto& transform = _player.lock()->GetTransformTree()->GetRoot();
 
     // 마우스 위치 업데이트
     _mousePos = KeyManager::GetInstance()->GetMousePos();
@@ -95,13 +96,13 @@ void CameraManager::MouseUpdate()
 void CameraManager::PlayerUpdate()
 {
     // 피치와 요만큼 플레이어를 회전시킨다.
-    auto playerTransform = _player.lock()->GetModel()->GetRoot()->transform;
+    auto& playerTransform = _player.lock()->GetTransformTree()->GetRoot();
     playerTransform->SetLocalRotation(vec3(XMConvertToRadians(_cameraPitch), XMConvertToRadians(_cameraYaw), 0));
 }
 
 void CameraManager::CameraPosUpdate()
 {
-    auto playerTransform = _player.lock()->GetModel()->GetRoot()->transform;
+    auto& playerTransform = _player.lock()->GetTransformTree()->GetRoot();
 
     Matrix mat = Matrix::Identity;
 
@@ -127,7 +128,7 @@ void CameraManager::CameraPosUpdate()
 
 void CameraManager::CameraLookUpdate()
 {
-    auto playerTransform = _player.lock()->GetModel()->GetRoot()->transform;
+    auto& playerTransform = _player.lock()->GetTransformTree()->GetRoot();
 
     Matrix mtxLookAt = XMMatrixLookAtLH(_cameraPos, playerTransform->GetLocalPosition(), playerTransform->GetUp());
     _cameraRight = vec3(mtxLookAt._11, mtxLookAt._21, mtxLookAt._31);
