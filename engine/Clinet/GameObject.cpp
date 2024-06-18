@@ -121,10 +121,44 @@ void GameObject::Render(uint32 instance , shared_ptr<StructedBuffer> buffer)
 	}
 }
 
-//COMPONET 이지만 따로관리 
+
 void GameObject::SetTransform(shared_ptr<Transform> transform)
 {
-	_transform = transform;
+	_rootTransform = transform;
+}
+
+void GameObject::MakeModelTransform()
+{
+	_rootTransform = make_shared<Transform>();
+
+	for (auto& bone : _model->GetBones())
+	{
+		//모델에 저장되있는 계층적 데이터를 가져옴
+		Matrix m = bone->transformData;
+
+		vec3 pos;
+		Quaternion rotation;
+		vec3 scale;
+		m.Decompose(scale, rotation, pos);
+
+		_rootTransform->_name = bone->name;
+		
+		_rootTransform->SetLocalPosition(pos);
+		_rootTransform->SetLocalRotation(Helper::ToEulerAngles(rotation));
+		_rootTransform->SetLocalScale(scale);
+		_rootTransform->Update();
+
+		if (bone->parentIndex > 0)
+		{
+			_rootTransform->SetParent();
+			bone->parent->transform->AddChild(bone->transform);
+		}
+	};
+		
+	for (auto& data : _meshData)
+	{
+		data->bone->transform->SetCenter(data->box.Center);
+	};
 }
 
 

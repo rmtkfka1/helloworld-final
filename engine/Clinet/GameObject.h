@@ -38,6 +38,8 @@ public:
 	virtual void Render(uint32 instance,  shared_ptr<StructedBuffer> buffer);
 
 	void SetTransform(shared_ptr<Transform> transform);
+	void MakeModelTransform();
+
 	void SetMaterial(shared_ptr<Material> material) { _material = material; }
 	void SetModel(shared_ptr<Model> model);
 	void AddComponent(shared_ptr<Component> component);
@@ -52,10 +54,8 @@ public:
 public:
 
 	GAMEOBJECT_TYPE _type =GAMEOBJECT_TYPE::None;
-
 	vector<shared_ptr<Component>> _component;
-
-	shared_ptr<Transform> _transform;
+	shared_ptr<Transform> _rootTransform;
 
 private:
 

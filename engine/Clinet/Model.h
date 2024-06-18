@@ -10,7 +10,6 @@ struct ModelBone
 	int32 index;
 	int32 parentIndex;
 	Matrix transformData;
-	shared_ptr<Transform> transform;
 
 	shared_ptr<ModelBone> parent; // Cache
 	vector<shared_ptr<ModelBone>> children; // Cache
@@ -46,7 +45,6 @@ public:
 	void Init(const wstring& path);
 	void ReadMaterial(wstring filename);
 	void ReadModel(wstring filename);
-	void MakeTransform();
 
 
 public:
