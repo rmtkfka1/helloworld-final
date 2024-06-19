@@ -29,41 +29,52 @@ void CollisonManager::Clear()
 
 void CollisonManager::CheckObjectCollusion()
 {
-	/*vector<	shared_ptr<BaseCollider>> colliders = _colliders;
 
-	shared_ptr<BaseCollider> src = colliders[0];
-	
-	for (int32 i = 1; i < colliders.size(); i++)
+	for (int32 i = 0; i < _colliders.size(); i++)
 	{
-		shared_ptr<BaseCollider> dest = colliders[i];
-
-		if (src == nullptr || dest == nullptr)
-		{
-			return;
+		if (_colliders[i]->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::EnemyBullet) {
+			continue;
 		}
 
-		if (src->CheckCollusion(dest))
+		if (_colliders[i]->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::Bullet) {
+			continue;
+		}
+
+		for (int32 j = i + 1; j < _colliders.size(); j++)
 		{
-			if (src->_collisionMap.contains(dest.get()) == false)
+			shared_ptr<BaseCollider> src = _colliders[i];
+			shared_ptr<BaseCollider> dest = _colliders[j];
+
+
+			if (src == nullptr || dest == nullptr)
 			{
-				src->GetOwner()->OnComponentBeginOverlap(src, dest);
-				dest->GetOwner()->OnComponentBeginOverlap(dest, src);
-				src->_collisionMap.insert(dest.get());
-				dest->_collisionMap.insert(src.get());
+				return;
+			}
+
+
+			if (src->CheckCollusion(dest))
+			{
+				if (src->_collisionMap.contains(dest.get()) == false)
+				{
+					src->GetOwner()->OnComponentBeginOverlap(src, dest);
+					dest->GetOwner()->OnComponentBeginOverlap(dest, src);
+					src->_collisionMap.insert(dest.get());
+					dest->_collisionMap.insert(src.get());
+				}
+			}
+
+			else
+			{
+				if (src->_collisionMap.contains(dest.get()))
+				{
+					src->GetOwner()->OnComponentEndOverlap(src, dest);
+					dest->GetOwner()->OnComponentEndOverlap(dest, src);
+					src->_collisionMap.erase(dest.get());
+					dest->_collisionMap.erase(src.get());
+				}
 			}
 		}
-
-		else
-		{
-			if (src->_collisionMap.contains(dest.get()))
-			{
-				src->GetOwner()->OnComponentEndOverlap(src, dest);
-				dest->GetOwner()->OnComponentEndOverlap(dest, src);
-				src->_collisionMap.erase(dest.get());
-				dest->_collisionMap.erase(src.get());
-			}
-		}
-	};*/
+	}
 	
 
 }

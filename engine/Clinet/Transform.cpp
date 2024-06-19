@@ -25,7 +25,7 @@ void Transform::Update()
 	//////////////////////////////////////
 	
 	// 변환 행렬을 순서대로 곱셈
-	_matLocal =  matScale * matRotation* _rotateToPlayer * matTranslation ;
+	_matLocal = matTranslationBack * matScale * matRotation* _rotateToPlayer * matTranslation * matTranslationBack2;
 
 	_matWorld = _matLocal; 
 

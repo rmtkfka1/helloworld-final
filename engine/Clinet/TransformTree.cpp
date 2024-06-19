@@ -68,6 +68,7 @@ void TransformTree::MakeTransformTree()
 	}
 
 	vector<shared_ptr<ModelMesh>>& meshes = GetOwner()->GetModel()->GetMeshes();
+
 	for (auto& data : meshes)
 	{
 		shared_ptr<Transform> transform = _nameMap[data->name];

@@ -8,6 +8,13 @@
 #include "Scene.h"
 #include "CollisonManager.h"
 #include "Enemy.h"
+EnenyBullet::EnenyBullet():GameObject(GAMEOBJECT_TYPE::EnemyBullet)
+{
+
+}
+EnenyBullet::~EnenyBullet()
+{
+}
 void EnenyBullet::Init()
 {
 	GameObject::Init();

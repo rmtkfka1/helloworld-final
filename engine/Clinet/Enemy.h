@@ -15,6 +15,11 @@ public:
 	void UpdateToLookAtPlayer();
 	void Fire();
 
+
+	virtual void OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider>other);
+	virtual void OnComponentEndOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other);
+
+
 private:
 	float elapsedTime = 0.0f;
 	float _rotationSpeed = 1.0f;
@@ -22,5 +27,7 @@ private:
 
 	bool movingForward = false;
 	float distance = 0;
+
+
 };
 

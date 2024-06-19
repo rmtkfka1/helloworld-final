@@ -3,6 +3,8 @@
 class EnenyBullet :public GameObject
 {
 public:
+	EnenyBullet();
+	virtual ~EnenyBullet();
 
 	virtual void Init() override;
 	virtual void Update() override;

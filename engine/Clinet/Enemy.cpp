@@ -9,6 +9,7 @@
 #include "BoxCollider.h"
 #include "SceneManger.h"
 #include "Scene.h"
+#include "InstancingParticle.h"
 Enemy::Enemy():GameObject(GAMEOBJECT_TYPE::Enemy)
 {
 }
@@ -94,11 +95,12 @@ void Enemy::UpdateToLookAtPlayer()
     );
 
 
-    static float temp = 1.0f;
+    static float temp = 100.0f * TimeManager::GetInstance()->GetDeltaTime();
+
     _transformTree->findByName(L"turret_geo")->SetRotateToPlayerMat(rotationMatrix);
     {
         vec3 pos = _transformTree->findByName(L"r_front_wheel_geo")->GetLocalRotation();
-        _transformTree->findByName(L"r_front_wheel_geo")->SetLocalRotation(vec3(pos.x+temp, pos.y, pos.z));
+        _transformTree->findByName(L"r_front_wheel_geo")->SetLocalRotation(vec3(pos.x + temp, pos.y, pos.z));
     }
 
     {
@@ -116,7 +118,7 @@ void Enemy::UpdateToLookAtPlayer()
         _transformTree->findByName(L"l_front_wheel_geo")->SetLocalRotation(vec3(pos.x + temp, pos.y, pos.z));
     }
 
-    temp += 0.1f;
+
 }
 
 void Enemy::Fire()
@@ -135,7 +137,7 @@ void Enemy::Fire()
             gameobject->SetModel(model);
 
 
-  
+
             vec3 pos = GetTransformTree()->findByName(L"canon_geo")->_position;
 
             gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(pos);
@@ -146,4 +148,29 @@ void Enemy::Fire()
 
         }
     }
+}
+
+void Enemy::OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other)
+{
+
+    if (other->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::Bullet)
+    {
+
+        shared_ptr<InstancingParticle> gameobject = make_shared<InstancingParticle>();
+        shared_ptr<Model> model = Model::ReadData(L"instanceing/instanceing");
+        gameobject->SetModel(model);
+        gameobject->Init();
+        gameobject->_ownerPosition = this->_transformTree->GetRoot()->_position;
+        SceneManger::GetInstance()->GetCurrentScene()->ReserveAddGameObject(gameobject);
+
+    }
+
+
+}
+
+void Enemy::OnComponentEndOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other)
+{
+
+
+
 }

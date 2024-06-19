@@ -46,8 +46,8 @@ void CameraManager::Init()
 void CameraManager::Update()
 {
     MouseUpdate();
-
     PlayerUpdate();
+    Animation();
     CameraPosUpdate();
     CameraLookUpdate();
     RegenerateMatrix();
@@ -66,7 +66,7 @@ void CameraManager::Update()
 
 void CameraManager::MouseUpdate()
 {
-    auto& transform = _player.lock()->GetTransformTree()->GetRoot();
+   
 
     // 마우스 위치 업데이트
     _mousePos = KeyManager::GetInstance()->GetMousePos();
@@ -93,6 +93,27 @@ void CameraManager::MouseUpdate()
     SetCursorPos(static_cast<int>(_centerScreen.x), static_cast<int>(_centerScreen.y));
 }
 
+void CameraManager::Animation()
+{
+    float dt = TimeManager::GetInstance()->GetDeltaTime();;
+
+    if (_elaspedTime > 1.5f)
+    {
+        _animationflag = false;
+        _elaspedTime = 0;
+        _shake = vec3(0, 0, 0);
+    }
+
+    if (_animationflag)
+    {
+        float intenisty = 1000.0f;
+        _shake.x = distribution(generator) * intenisty * dt;
+        _shake.y = distribution(generator) * intenisty * dt;
+
+        _elaspedTime += dt;
+    }
+}
+
 void CameraManager::PlayerUpdate()
 {
     // 피치와 요만큼 플레이어를 회전시킨다.
@@ -115,7 +136,7 @@ void CameraManager::CameraPosUpdate()
     mat._13 = _cameraRight.z; mat._23 = _cameraUp.z; mat._33 = _cameraLook.z;
 
     vec3 offset = vec3::Transform(_offset, mat);
-    vec3 cameraPos = playerTransform->GetLocalPosition() + offset;
+    vec3 cameraPos = playerTransform->_position + offset;
     vec3 direction = cameraPos - _cameraPos;
 
     float length = direction.Length();
@@ -130,7 +151,7 @@ void CameraManager::CameraLookUpdate()
 {
     auto& playerTransform = _player.lock()->GetTransformTree()->GetRoot();
 
-    Matrix mtxLookAt = XMMatrixLookAtLH(_cameraPos, playerTransform->GetLocalPosition(), playerTransform->GetUp());
+    Matrix mtxLookAt = XMMatrixLookAtLH(_cameraPos, playerTransform->_position, playerTransform->GetUp());
     _cameraRight = vec3(mtxLookAt._11, mtxLookAt._21, mtxLookAt._31);
     _cameraUp = vec3(mtxLookAt._12, mtxLookAt._22, mtxLookAt._32);
     _cameraLook = vec3(mtxLookAt._13, mtxLookAt._23, mtxLookAt._33);
@@ -145,10 +166,12 @@ void CameraManager::RegenerateMatrix()
     _cameraUp.Cross(_cameraLook, _cameraRight);
     _cameraUp.Normalize();
 
-    S_MatView._11 = _cameraRight.x; S_MatView._12 = _cameraUp.x; S_MatView._13 = _cameraLook.x;
+    S_MatView = XMMatrixLookToLH(_cameraPos+ _shake, _cameraLook, _cameraUp);
+
+    /*S_MatView._11 = _cameraRight.x; S_MatView._12 = _cameraUp.x; S_MatView._13 = _cameraLook.x;
     S_MatView._21 = _cameraRight.y; S_MatView._22 = _cameraUp.y; S_MatView._23 = _cameraLook.y;
     S_MatView._31 = _cameraRight.z; S_MatView._32 = _cameraUp.z; S_MatView._33 = _cameraLook.z;
     S_MatView._41 = -_cameraPos.Dot(_cameraRight);
     S_MatView._42 = -_cameraPos.Dot(_cameraUp);
-    S_MatView._43 = -_cameraPos.Dot(_cameraLook);
+    S_MatView._43 = -_cameraPos.Dot(_cameraLook);*/
 }

@@ -201,6 +201,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="ImguiManager.h" />
+    <ClInclude Include="InstancingParticle.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="Material.h" />
@@ -286,6 +287,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ImguiManager.cpp" />
+    <ClCompile Include="InstancingParticle.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="Material.cpp" />

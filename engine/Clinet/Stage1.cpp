@@ -118,6 +118,7 @@ void Stage1::Init()
 
 
 
+
 	CameraManager::GetInstance()->Init();
 	Super::Init();
 

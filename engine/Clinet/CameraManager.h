@@ -30,6 +30,7 @@ public:
 	void Init();
 	void Update();
 	void MouseUpdate();
+	void Animation();
 	void PlayerUpdate();
 	void CameraPosUpdate();
 	void CameraLookUpdate();

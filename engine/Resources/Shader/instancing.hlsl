@@ -36,11 +36,7 @@ VS_OUT VS_Main(VS_IN input, uint nInstanceID : SV_InstanceID)
     output.pos = mul(output.pos, instanceInfo[nInstanceID].InstnaceWorldMatrix);
     output.pos = mul(output.pos, ViewMatrix);
     output.pos = mul(output.pos, ProjectionMatrix);
-    
-    output.Worldpos = mul(float4(input.pos, 1.0f), instanceInfo[nInstanceID].InstnaceWorldMatrix);
-    output.normal = mul(float4(input.normal, 0.0f), instanceInfo[nInstanceID].InstnaceWorldMatrix);
-
-    output.uv = input.uv;
+   
     
     return output;
   
@@ -48,22 +44,5 @@ VS_OUT VS_Main(VS_IN input, uint nInstanceID : SV_InstanceID)
 
 float4 PS_Main(VS_OUT input) : SV_Target
 {
- 
-    float4 color = basic_texture.Sample(sam_0, input.uv);
-    input.normal = normalize(input.normal);
-    
-    LightColor totalColor = (LightColor) 0.f;
-    
-    for (int i = 0; i < g_lightCount; ++i)
-    {
-        LightColor lightcolor = CalculateLightColor(i, input.normal, input.Worldpos.xyz);
-        
-        totalColor.diffuse += lightcolor.diffuse;
-        totalColor.ambient += lightcolor.ambient;
-        totalColor.specular += lightcolor.specular;
-    }
-    
-    color.xyz = (totalColor.diffuse.xyz * color.xyz) + (totalColor.ambient.xyz * color.xyz) + (totalColor.specular.xyz * color.xyz);
-    
-    return color;
+    return float4(hit, float_1, float_2, 1.0f);
 }

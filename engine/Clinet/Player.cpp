@@ -9,6 +9,8 @@
 #include "BoxCollider.h"
 #include "SceneManger.h"
 #include "Scene.h"
+#include "CollisonManager.h"
+#include "CameraManager.h"
 
 Player::Player():GameObject(GAMEOBJECT_TYPE::Player)
 {
@@ -31,13 +33,22 @@ void Player::Update()
 
 
 	static float temp = 0.1f;
-	shared_ptr<Transform>& transform = _transformTree->findByName(L"Top_Rotor");
-	auto& pos = transform->GetLocalRotation();
-	transform->SetLocalRotation(vec3(pos.x, pos.y + temp, pos.z));
+	{
+		shared_ptr<Transform>& transform = _transformTree->findByName(L"Top_Rotor");
+		auto& pos = transform->GetLocalRotation();
+		transform->SetLocalRotation(vec3(pos.x, pos.y + temp, pos.z));
+	}
+
+	{
+		shared_ptr<Transform>& transform = _transformTree->findByName(L"Back_Rotor");
+		auto& pos = transform->GetLocalRotation();
+		transform->SetLocalRotation(vec3(pos.x, pos.y+ temp, pos.z ));
+	}
+
 
 	KeyUpdate(_transformTree->GetRoot(), dt);
-	GameObject::Update();
 	UpdateLight();
+	GameObject::Update();
 
 }
 
@@ -120,6 +131,24 @@ void Player::UpdateLight()
 {
 	auto& params = LightManager::GetInstnace()->_lightParmas;
 
-	params.LightInfos[_lightIndex].position = _transformTree->GetRoot()->GetLocalPosition();
+	params.LightInfos[_lightIndex].position = _transformTree->GetRoot()->_position;
 	params.LightInfos[_lightIndex].direction = _transformTree->GetRoot()->GetLook();
+}
+
+void Player::OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other)
+{
+
+	//if (other->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::EnemyBullet)
+	//{
+	//	SceneManger::GetInstance()->GetCurrentScene()->ReserveDeleteGameObject(other->GetOwner());
+	//	CollisonManager::GetInstance()->RemoveCollider(other);
+	//	CameraManager::GetInstance()->_animationflag = true;
+	//}
+
+
+}
+
+void Player::OnComponentEndOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other)
+{
+
 }

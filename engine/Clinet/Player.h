@@ -16,9 +16,11 @@ public:
 	void AddLight();
 	void UpdateLight();
 
+	virtual void OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider>other);
+	virtual void OnComponentEndOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other);
 
 private:
-	float _speed = 10000.0f;
+	float _speed = 20000.0f;
 	int _lightIndex;
 
 };
