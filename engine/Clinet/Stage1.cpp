@@ -58,7 +58,7 @@ void Stage1::Init()
 		ememy->AddComponent(make_shared<BoxCollider>());
 
 		ememy->GetTransformTree()->GetRoot()->SetLocalScale(vec3(1.0f, 1.0f, 1.0f));
-		ememy->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(-5000.0f, 0, 0));
+		ememy->GetTransformTree()->GetRoot()->SetWorldPosition(vec3(-5000.0f,-100.0f, -4000.0f));
 		ObjectManager::GetInstance()->_enemy = ememy;
 		AddGameObject(ememy);
 	}
@@ -69,6 +69,7 @@ void Stage1::Init()
 		shared_ptr<Model> model = Model::ReadData(L"helicpoter/helicpoter");
 		player->SetModel(model);
 		player->AddComponent(make_shared<BoxCollider>());
+		player->GetTransformTree()->GetRoot()->SetLocalRotation(vec3(XMConvertToRadians(0), XMConvertToRadians(90.0f), 0));
 
 		player->GetTransformTree()->GetRoot()->SetLocalPosition(vec3(-3000.0f,300.0f, 0));
 		ObjectManager::GetInstance()->_player = player;

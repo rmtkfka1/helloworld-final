@@ -19,8 +19,8 @@ void EnenyBullet::Init()
 {
 	GameObject::Init();
 
-	auto& pos1 = ObjectManager::GetInstance()->_player.lock()->GetTransformTree()->GetRoot()->_position;
-	auto& pos2 = ObjectManager::GetInstance()->_enemy.lock()->GetTransformTree()->findByName(L"canon_geo")->_position;
+	auto pos1 = ObjectManager::GetInstance()->_player.lock()->GetTransformTree()->GetRoot()->GetWorldPosition();
+	auto pos2 = ObjectManager::GetInstance()->_enemy.lock()->GetTransformTree()->findByName(L"canon_geo")->GetWorldPosition();
 
 	vec3 result = pos1 - pos2;
 	result.Normalize();

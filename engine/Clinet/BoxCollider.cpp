@@ -38,7 +38,7 @@ void BoxCollider::Update()
 
 	auto onwerTransform = GetOwner()->GetTransformTree()->GetRoot();
 
-	_orginbox.Transform(_box, onwerTransform->GetMatrix());
+	_orginbox.Transform(_box, onwerTransform->GetWorldMatrix());
 
 
 }

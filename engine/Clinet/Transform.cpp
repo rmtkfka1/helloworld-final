@@ -1,15 +1,21 @@
 #include "pch.h"
 #include "Transform.h"
+#include "Helper.h"
+#include "CameraManager.h"
 #include "Core.h"
 #include "ConstantBuffer.h"
-#include "CameraManager.h"
-#include "Helper.h"
+
 Transform::Transform():Component(COMPONENT_TYPE::TRANSFORM)
 {
+
 }
+
 Transform::~Transform()
 {
+
 }
+
+
 void Transform::Update()
 {
 	Matrix matScale = Matrix::CreateScale(_localScale);
@@ -18,43 +24,90 @@ void Transform::Update()
 	matRotation *= Matrix::CreateRotationZ(_localRotation.z);
 	Matrix matTranslation = Matrix::CreateTranslation(_localPosition);
 
-	////// 센터를 고려한 평행이동 행렬 생성
 	Matrix matTranslationBack = Matrix::CreateTranslation(-_center);
 	Matrix matTranslationBack2 = Matrix::CreateTranslation(_center);
 
-	//////////////////////////////////////
-	
-	// 변환 행렬을 순서대로 곱셈
-	_matLocal = matTranslationBack * matScale * matRotation* _rotateToPlayer * matTranslation * matTranslationBack2;
 
-	_matWorld = _matLocal; 
+	_matLocal = matTranslationBack * matScale * matRotation * _rotateToPlayer * matTranslation * matTranslationBack2;
 
-	shared_ptr<Transform> parent = GetParent().lock();
-
-	if (parent != nullptr)
+	if (HasParent())
 	{
-		_matWorld *= parent->GetLocalToWorldMatrix();
+		_matWorld = _matLocal * _parent.lock()->GetWorldMatrix();
+	}
+	else
+	{
+		_matWorld = _matLocal;
 	}
 
 	Quaternion quat;
 	_matWorld.Decompose(_scale, quat, _position);
 	_rotation = Helper::ToEulerAngles(quat);
 
+	_right = vec3::TransformNormal(vec3::Right, _matWorld);
+	_up = vec3::TransformNormal(vec3::Up, _matWorld);
+	_look = vec3::TransformNormal(vec3::Backward, _matWorld);
+
+	// Children
 	for (const shared_ptr<Transform>& child : _children)
 		child->Update();
-
 }
 
 void Transform::PushData()
 {
-
 	TransformParams transformParams = {};
 	transformParams.matWorld = _matWorld;
 	transformParams.matView = CameraManager::S_MatView;
 	transformParams.matProjection = CameraManager::S_MatProjection;
 
 	core->GetConstantBuffer(CBV_REGISTER::b1)->PushData(&transformParams, sizeof(transformParams));
-
 }
 
 
+void Transform::SetWorldScale(const vec3 worldScale)
+{
+	if (HasParent())
+	{
+		vec3 parentScale = _parent.lock()->GetWorldScale();
+		vec3 scale = worldScale;
+		scale.x /= parentScale.x;
+		scale.y /= parentScale.y;
+		scale.z /= parentScale.z;
+		SetLocalScale(scale);
+	}
+	else
+	{
+		SetLocalScale(worldScale);
+	}
+}
+
+void Transform::SetWorldRotation(const vec3 worldRotation)
+{
+	if (HasParent())
+	{
+		Matrix inverseMatrix = _parent.lock()->GetWorldMatrix().Invert();
+
+		vec3 rotation;
+		rotation.TransformNormal(worldRotation, inverseMatrix);
+
+		SetLocalRotation(rotation);
+	}
+	else
+		SetLocalRotation(worldRotation);
+}
+
+void Transform::SetWorldPosition(const vec3 worldPosition)
+{
+	if (HasParent())
+	{
+		Matrix worldToParentLocalMatrix = _parent.lock()->GetWorldMatrix().Invert();
+
+		vec3 position;
+		position.Transform(worldPosition, worldToParentLocalMatrix);
+
+		SetLocalPosition(position);
+	}
+	else
+	{
+		SetLocalPosition(worldPosition);
+	}
+}

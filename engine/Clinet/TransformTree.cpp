@@ -61,7 +61,7 @@ void TransformTree::MakeTransformTree()
 			transform->Update();
 
 			transform->SetParent(map[bone->parentIndex]);
-			transform->GetParent().lock()->AddChild(transform);
+			transform->GetParent()->AddChild(transform);
 			map[bone->index] = transform;
 			_nameMap[transform->_name] = transform;
 		}

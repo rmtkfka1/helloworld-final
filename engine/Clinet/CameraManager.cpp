@@ -118,7 +118,8 @@ void CameraManager::PlayerUpdate()
 {
     // 피치와 요만큼 플레이어를 회전시킨다.
     auto& playerTransform = _player.lock()->GetTransformTree()->GetRoot();
-    playerTransform->SetLocalRotation(vec3(XMConvertToRadians(_cameraPitch), XMConvertToRadians(_cameraYaw), 0));
+    auto pos = playerTransform->GetLocalRotation();
+    playerTransform->SetLocalRotation(vec3(XMConvertToRadians(pos.x+_cameraPitch), XMConvertToRadians(pos.y+_cameraYaw+180.0f), 0));
 }
 
 void CameraManager::CameraPosUpdate()
@@ -136,7 +137,7 @@ void CameraManager::CameraPosUpdate()
     mat._13 = _cameraRight.z; mat._23 = _cameraUp.z; mat._33 = _cameraLook.z;
 
     vec3 offset = vec3::Transform(_offset, mat);
-    vec3 cameraPos = playerTransform->_position + offset;
+    vec3 cameraPos = playerTransform->GetWorldPosition() + offset;
     vec3 direction = cameraPos - _cameraPos;
 
     float length = direction.Length();
@@ -151,7 +152,7 @@ void CameraManager::CameraLookUpdate()
 {
     auto& playerTransform = _player.lock()->GetTransformTree()->GetRoot();
 
-    Matrix mtxLookAt = XMMatrixLookAtLH(_cameraPos, playerTransform->_position, playerTransform->GetUp());
+    Matrix mtxLookAt = XMMatrixLookAtLH(_cameraPos, playerTransform->GetWorldPosition(), playerTransform->GetUp());
     _cameraRight = vec3(mtxLookAt._11, mtxLookAt._21, mtxLookAt._31);
     _cameraUp = vec3(mtxLookAt._12, mtxLookAt._22, mtxLookAt._32);
     _cameraLook = vec3(mtxLookAt._13, mtxLookAt._23, mtxLookAt._33);

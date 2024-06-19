@@ -35,13 +35,13 @@ void Player::Update()
 	static float temp = 0.1f;
 	{
 		shared_ptr<Transform>& transform = _transformTree->findByName(L"Top_Rotor");
-		auto& pos = transform->GetLocalRotation();
+		auto pos = transform->GetLocalRotation();
 		transform->SetLocalRotation(vec3(pos.x, pos.y + temp, pos.z));
 	}
 
 	{
 		shared_ptr<Transform>& transform = _transformTree->findByName(L"Back_Rotor");
-		auto& pos = transform->GetLocalRotation();
+		auto pos = transform->GetLocalRotation();
 		transform->SetLocalRotation(vec3(pos.x, pos.y+ temp, pos.z ));
 	}
 
@@ -93,7 +93,7 @@ void Player::KeyUpdate(std::shared_ptr<Transform>& rootTransform, float dt)
 		shared_ptr <Bullet> gameobject = make_shared<Bullet>();
 		shared_ptr<Model> model = Model::ReadData(L"box/box");
 		gameobject->SetModel(model);
-		auto& pos = this->GetTransformTree()->GetRoot()->_position;
+		auto pos = this->GetTransformTree()->GetRoot()->GetWorldPosition();
 
 
 		gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(pos);
@@ -131,19 +131,19 @@ void Player::UpdateLight()
 {
 	auto& params = LightManager::GetInstnace()->_lightParmas;
 
-	params.LightInfos[_lightIndex].position = _transformTree->GetRoot()->_position;
+	params.LightInfos[_lightIndex].position = _transformTree->GetRoot()->GetWorldPosition();
 	params.LightInfos[_lightIndex].direction = _transformTree->GetRoot()->GetLook();
 }
 
 void Player::OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_ptr<BaseCollider> other)
 {
 
-	//if (other->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::EnemyBullet)
-	//{
-	//	SceneManger::GetInstance()->GetCurrentScene()->ReserveDeleteGameObject(other->GetOwner());
-	//	CollisonManager::GetInstance()->RemoveCollider(other);
-	//	CameraManager::GetInstance()->_animationflag = true;
-	//}
+	if (other->GetOwner()->GetGameObjectType() == GAMEOBJECT_TYPE::EnemyBullet)
+	{
+		SceneManger::GetInstance()->GetCurrentScene()->ReserveDeleteGameObject(other->GetOwner());
+		CollisonManager::GetInstance()->RemoveCollider(other);
+		CameraManager::GetInstance()->_animationflag = true;
+	}
 
 
 }

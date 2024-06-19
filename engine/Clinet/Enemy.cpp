@@ -74,8 +74,8 @@ void Enemy::UpdateToLookAtPlayer()
     std::shared_ptr<Player> player = ObjectManager::GetInstance()->_player.lock();
     if (!player) return;
 
-    auto& playerPos = player->GetTransformTree()->GetRoot()->GetLocalPosition();
-    auto& enemyPos = _transformTree->GetRoot()->GetLocalPosition();
+    auto playerPos = player->GetTransformTree()->GetRoot()->GetLocalPosition();
+    auto enemyPos = _transformTree->GetRoot()->GetLocalPosition();
 
     vec3 direction = enemyPos - playerPos;
     direction.Normalize();
@@ -138,7 +138,7 @@ void Enemy::Fire()
 
 
 
-            vec3 pos = GetTransformTree()->findByName(L"canon_geo")->_position;
+            vec3 pos = GetTransformTree()->findByName(L"canon_geo")->GetWorldPosition();
 
             gameobject->GetTransformTree()->GetRoot()->SetLocalPosition(pos);
             gameobject->GetTransformTree()->GetRoot()->SetLocalScale(vec3(0.5f, 0.5f, 0.5f));
@@ -160,7 +160,7 @@ void Enemy::OnComponentBeginOverlap(shared_ptr<BaseCollider> collider, shared_pt
         shared_ptr<Model> model = Model::ReadData(L"instanceing/instanceing");
         gameobject->SetModel(model);
         gameobject->Init();
-        gameobject->_ownerPosition = this->_transformTree->GetRoot()->_position;
+        gameobject->_ownerPosition = this->_transformTree->GetRoot()->GetWorldPosition();
         SceneManger::GetInstance()->GetCurrentScene()->ReserveAddGameObject(gameobject);
 
     }
